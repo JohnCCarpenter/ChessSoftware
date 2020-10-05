@@ -30,3 +30,21 @@ IM Eric Rosen, and GM Hikaru Nakamura. Starting out at around 800 rating on Ches
 to 1100 in blitz and 1300 in rapid. Hopefully through programming this app I will be able to foster 
 some of this newfound interest in the game while improving my own chess game through the visualization 
 that I will need to use while designing this board.
+
+## User Stories
+
+In the context of a chessboard application:
+ - As a user, I want to be able to start a standard game of chess with the pieces where they are meant to be
+ - As a user, I want to be able to move a piece from one position to another
+ - As a user, I want to be able to capture an enemy's piece with my own
+ - As a user, I want to be able to see where the pieces are located on the board
+ - As a user, I want to have the option to learn how different pieces are allowed to move in my game
+ 
+ **An excerpt from the project requirements that needs to be met and explicitly stated above is as below:**
+ 
+ *Note that in each of these sample applications, there is at least one user story that involves adding multiple Xs to 
+ a Y (e.g. adding an item to a to-do list) where X and Y are classes that you must design yourself (so Y cannot be of
+ type ArrayList<E> for example). By multiple, we mean that it will not be sufficient to always add a fixed X to a Y but
+  this must be a dynamic process (i.e. in most cases this will mean there is no fixed size of Xs but this is not a 
+  requirement). You must include at least one such user story in this phase of the application along with three others
+  of your choosing.*
