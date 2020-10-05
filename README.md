@@ -16,12 +16,12 @@ useful stats like how many pieces have been captured for each side.
  - imports of chess computers for help in analysis
  - addition of AI opponents
 
-##Targeted Audience
+## Targeted Audience
 This project will be able to be used for anyone who wants a local based chess app on their computer. In
 the future it would be amazing to deploy this app to a website to allow for people to play with each other
 online, but that will not be covered within the scope of this project. 
 
-##Motivation
+## Motivation
 
 I have recently become quite enamored by the game of chess. I had always had some interest in the game
 but never really committed to learning many of the specifics of the game. Recently I have been playing
