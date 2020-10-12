@@ -35,10 +35,12 @@ that I will need to use while designing this board.
 
 In the context of a chessboard application:
  - As a user, I want to be able to start a standard game of chess with the pieces where they are meant to be
- - As a user, I want to be able to move a piece from one position to another
+ - As a user, I want to be able to move a piece from one position to another through a console
  - As a user, I want to be able to capture an enemy's piece with my own
  - As a user, I want to be able to see where the pieces are located on the board
  - As a user, I want to have the option to learn how different pieces are allowed to move in my game
+ - As a user, I want to be able to see which pieces I have captured
+ 
  
  **An excerpt from the project requirements that needs to be met and explicitly stated above is as below:**
  
@@ -48,3 +50,6 @@ In the context of a chessboard application:
   this must be a dynamic process (i.e. in most cases this will mean there is no fixed size of Xs but this is not a 
   requirement). You must include at least one such user story in this phase of the application along with three others
   of your choosing.*
+  
+  Keeping track of captured pieces in a captures class could work
+  Which pieces a user captured
