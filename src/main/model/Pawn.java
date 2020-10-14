@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 // Extends the ChessPiece class to include specific information about pawns. Pawns may only move one square forward
 // except for when they have not moved, and can then move either one or two squares forward. Pawns CANNOT move through
 // other pieces.
@@ -22,20 +24,75 @@ public class Pawn extends ChessPiece {
 
     @Override
     public boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y) {
-        return false;
+        if (!(abs(x - this.getPosX()) == 0)) {
+            return false;
+        } else if (hasMoved) {
+            if (abs(y - this.getPosY()) >= 2) {
+                return false;
+            }
+        }
+        if (abs(y - this.getPosY()) > 2) {
+            return false;
+        } else if (this.checkBackwards(y)) {
+            return false;
+        }
+        if (y == this.getPosY()) {
+            return false;
+        } else if (y < 0 || y > 7) {
+            return false;
+        } else if (checkIsOccupied(active, x, y)) {
+            return false;
+        } else {
+            return (!(checkPath(active, x, y)));
+        }
     }
+
 
     @Override
+    //CURRENTLY DOES NOT INCLUDE EN PASSENT!!!
     public Boolean isLegalCapture(ArrayList<ChessPiece> active, int x, int y) {
-        return null;
+        if (this.getOwner().isPlayingWhite()) {
+            if (!(abs(x - this.getPosX()) == 1) || !((y - this.getPosY()) == 1)) {
+                return false;
+            }
+        } else if (!(this.getOwner().isPlayingWhite())) {
+            if (!(abs(x - this.getPosX()) == 1) || !((y - this.getPosY()) == -1)) {
+                return false;
+            }
+        }
+        if (!(checkIsOccupied(active, x, y))) {
+            return false;
+        } else {
+            ChessPiece occupier = null;
+            for (ChessPiece p : active) {
+                if (p.getPosX() == x && p.getPosY() == y) {
+                    occupier = p;
+                }
+            }
+            return (!(this.getOwner().isPlayingWhite() == occupier.getOwner().isPlayingWhite()));
+        }
     }
 
-    //REQUIRES: pawn this is called on is on the opponents back rank
-    //MODIFIES: this and promotedPiece
-    //EFFECTS: removes this pawn from play and replaces it with a new piece of type upgrade called promotedPiece
-    //         if multiple pieces have been promoted name them promotedPiecen where n is the number of promotions
-    public void promote(String upgrade) {
-        //stub
+    //REQUIRES: movement from this position to x, y is legal if active is empty other than this
+    //EFFECTS: checks if there are any pieces on the path from this position to x, y according to Pieces movement
+    private boolean checkPath(ArrayList<ChessPiece> active, int x, int y) {
+        int dirX = 0;
+        int dirY;
+        dirY = (y - this.getPosY()) / abs(y - this.getPosY());
+        //stopX length == stopsY length and each position corresponds to each other
+        ArrayList<Integer> stopsX = new ArrayList<>();
+        ArrayList<Integer> stopsY = new ArrayList<>();
+        genStops(dirX, dirY, stopsX, stopsY, x, y);
+        return checkBlocked(active, stopsX, stopsY);
+    }
+
+    //EFFECTS: Returns true if the piece is attempting to move backwards in y
+    private boolean checkBackwards(int y) {
+        if (this.getOwner().isPlayingWhite()) {
+            return ((y - this.getPosY()) < 0);
+        } else {
+            return ((y - this.getPosY()) > 0);
+        }
     }
 
 }

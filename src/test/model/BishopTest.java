@@ -1,89 +1,58 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class BishopTest extends ChessPieceTest {
 
-public class BishopTest {
-
-    Bishop b1;
-    Bishop b2;
-    ChessPiece piece1;
-    ChessPiece piece2;
-    ArrayList<ChessPiece> active;
-    User owner = new User();
 
     @BeforeEach
     public void setup() {
-        b1 = new Bishop(0,0, owner);
-        b2 = new Bishop(2, 6, owner);
-    }
-
-    @Test
-    public void constructorTest() {
-        assertEquals(0, b1.getPosX());
-        assertEquals(0, b1.getPosY());
-        assertEquals(2, b2.getPosX());
-        assertEquals(6, b2.getPosY());
-    }
-
-    // Testing for the isLegalMove Method
-    @Test
-    public void isLegalMoveBlockedTest() {
-        piece1 = new Pawn(1,1,owner);
-        assertEquals(1, piece1.getPosX());
-        assertEquals(1, piece1.getPosY());
+        setupPieces();
+        setupTargets();
         active = new ArrayList<ChessPiece>();
-        active.add(piece1);
-        assertFalse(b1.isLegalMove(active, 2,2));
     }
 
-    @Test
-    public void isLegalMoveOccupiedTest() {
-        piece1 = new Pawn(2,2,owner);
-        assertEquals(2, piece1.getPosX());
-        assertEquals(2, piece1.getPosY());
-        active = new ArrayList<ChessPiece>();
-        active.add(piece1);
-        assertFalse(b1.isLegalMove(active, 2,2));
+    //Helpers for setup method found below
+    private void setupPieces() {
+        pieceValue = 3;
+        testerPosX = 0;
+        testerPosY = 0;
+        enemyTesterPosX = 7;
+        enemyTesterPosY = 7;
+        boundTesterPosX = 6;
+        boundTesterPosY = 6;
+        enemyBoundTesterPosX = 1;
+        enemyBoundTesterPosY = 1;
+        blockerPosX = 2;
+        blockerPosY = 2;
+        tester = new Bishop(testerPosX, testerPosY, owner);
+        boundTester = new Bishop(boundTesterPosX, boundTesterPosY, owner);
+        enemyTester = new Bishop(enemyTesterPosX, enemyTesterPosY, enemyOwner);
+        enemyBoundTester = new Bishop(enemyBoundTesterPosX, enemyBoundTesterPosY, enemyOwner);
     }
 
-    @Test
-    public void isLegalMoveBadMovementTest() {
-        piece1 = new Pawn(7, 4, owner);
-        assertEquals(7, piece1.getPosX());
-        assertEquals(4, piece1.getPosY());
-        active = new ArrayList<ChessPiece>();
-        active.add(piece1);
-        assertFalse(b1.isLegalMove(active, 3, 1));
-    }
-
-    @Test
-    public void isLegalMoveSucceedTest() {
-        piece1 = new Pawn(2,2,owner);
-        assertEquals(2, piece1.getPosX());
-        assertEquals(2, piece1.getPosY());
-        active = new ArrayList<ChessPiece>();
-        active.add(piece1);
-        assertTrue(b1.isLegalMove(active, 1,1));
-    }
-
-    // Testing for the isLegalCapture Method
-    @Test
-    public void isLegalCaptureBlockedTest() {
-
-    }
-
-    @Test
-    public void isLegalCaptureEmptyTest() {
-
-    }
-
-    @Test
-    public void isLegalCaptureSucceedTest() {
-
+    private void setupTargets() {
+        illegalTargetPosX = 3;
+        illegalTargetPosY = 5;
+        targetPosX = 5;
+        targetPosY = 5;
+        belowBoundaryXTargetPosX = -1;
+        belowBoundaryXTargetPosY = 1;
+        lowBoundaryXTargetPosX = 0;
+        lowBoundaryXTargetPosY = 2;
+        highBoundaryXTargetPosX = 7;
+        highBoundaryXTargetPosY = 5;
+        aboveBoundaryXTargetPosX = 8;
+        aboveBoundaryXTargetPosY = 6;
+        belowBoundaryYTargetPosX = 1;
+        belowBoundaryYTargetPosY = -1;
+        lowBoundaryYTargetPosX = 2;
+        lowBoundaryYTargetPosY = 0;
+        highBoundaryYTargetPosX = 5;
+        highBoundaryYTargetPosY = 7;
+        aboveBoundaryYTargetPosX = 6;
+        aboveBoundaryYTargetPosY = 8;
     }
 }

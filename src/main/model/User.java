@@ -4,18 +4,22 @@ import java.util.ArrayList;
 
 // User is a class representing a player at a chess board, with information about what pieces they own and which
 // enemy pieces they have captured, as well as what their name is. Can return any of this information and display it
-// to console.
+// to console. !!!NOTE ANY CONSOLE INTERACTION NEEDS TO BE IN THE UI CLASS SO GET THOSE OUT OF HERE, TO FIX THIS JUST
+// MAKE THE VOID RETURNS INSTEAD RETURN A STRING AND THEN HAVE THAT STRING PRINTED IN UI PART OF PROJECT!!!
 public class User {
     private ArrayList<ChessPiece> owned;
     private ArrayList<ChessPiece> captured;
     private ArrayList<String> threatened;
     private ArrayList<String> possibleMoves;
+    //If boolean is true this owner is playing with the white pieces, if false they play with black pieces
+    private boolean playingWhite;
 
-    public User() {
-        owned = null;
-        captured = null;
-        threatened = null;
-        possibleMoves = null;
+    public User(boolean isWhite) {
+        owned = new ArrayList<ChessPiece>();
+        captured = new ArrayList<ChessPiece>();
+        threatened = new ArrayList<String>();
+        possibleMoves = new ArrayList<String>();
+        playingWhite = isWhite;
     }
 
     //EFFECTS: Returns a list of all of the squares that this player is currently threatening to capture on
@@ -52,6 +56,10 @@ public class User {
 
     public ArrayList<String> getPossibleMoves() {
         return possibleMoves;
+    }
+
+    public boolean isPlayingWhite() {
+        return playingWhite;
     }
 
 }
