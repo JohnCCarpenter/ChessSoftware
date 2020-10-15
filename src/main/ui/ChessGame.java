@@ -8,6 +8,7 @@ import java.util.Scanner;
 //ChessGame sets up and contains information about a standard game of chess that is being played between 2 players
 public class ChessGame {
     private Scanner input;
+
     private ArrayList<ChessPiece> activePieces;
     private ArrayList<User> players;
 
@@ -53,10 +54,6 @@ public class ChessGame {
     private ChessPiece bq;
     private ChessPiece bk;
 
-
-
-    public static final int BOARD_SIZE = 8;
-
     //EFFECTS: runs the Chess Game
     public ChessGame() {
         runChessGame();
@@ -66,9 +63,9 @@ public class ChessGame {
     //EFFECTS: processes commands of two players playing the game of chess
     private void runChessGame() {
         boolean gameOver = false;
-        String location = null;
-        String action = null;
-        String target = null;
+        String location;
+        String action;
+        String target;
 
         setup();
 
@@ -76,13 +73,13 @@ public class ChessGame {
             visualizeGame();
             System.out.println("Where is the piece you would like to move?");
             location = input.next();
-            System.out.println("Capture, Move, or Quit?");
+            System.out.println("Capture, Move, List, or Quit?");
             action = input.next();
             System.out.println("What is the target location?");
             target = input.next();
-            location.toLowerCase();
-            action.toLowerCase();
-            target.toLowerCase();
+            location = location.toLowerCase();
+            action = action.toLowerCase();
+            target = target.toLowerCase();
 
             if (action.equals("quit")) {
                 gameOver = true;
@@ -100,6 +97,27 @@ public class ChessGame {
             performMove(location, target);
         } else if (action.equals("capture")) {
             performCapture(location, target);
+        } else if (action.equals("list")) {
+            printCaptures();
+        }
+    }
+
+    //EFFECTS: prints out the list of captures of the player who's turn it currently is
+    private void printCaptures() {
+        if (whiteTurn) {
+            System.out.print(whitePlayer.getName() + " has captured ");
+            for (ChessPiece p : whitePlayer.getCaptured()) {
+                System.out.print(p.printSymbol());
+                System.out.print(" ");
+                System.out.println();
+            }
+        } else {
+            System.out.print(blackPlayer.getName() + " has captured ");
+            for (ChessPiece p : blackPlayer.getCaptured()) {
+                System.out.print(p.printSymbol());
+                System.out.print(" ");
+                System.out.println();
+            }
         }
     }
 
@@ -108,7 +126,7 @@ public class ChessGame {
     private void visualizeGame() {
         int x;
         int y;
-        for (x = 0; x <= 7; x++) {
+        for (x = 7; x >= 0; x--) {
             for (y = 0; y <= 7; y++) {
                 boolean occupied = false;
                 System.out.print(" ");
@@ -141,10 +159,10 @@ public class ChessGame {
                 if (p.move(activePieces, targetX, targetY)) {
                     System.out.println("Moved piece on " + location + " to " + target);
                     whiteTurn = !whiteTurn;
-                    goodSelect = true;
                 } else {
                     System.out.println("Illegal movement, try again");
                 }
+                goodSelect = true;
             }
         }
         if (!goodSelect) {
@@ -160,21 +178,27 @@ public class ChessGame {
         int pieceY = translator.translateToYCoord(location);
         int targetX = translator.translateToXCoord(target);
         int targetY = translator.translateToYCoord(target);
-        boolean goodSelect = false;
 
+        ChessPiece p = returnPieceOn(activePieces, pieceX, pieceY, whiteTurn);
+
+        if (returnPieceOn(activePieces, pieceX, pieceY, whiteTurn) == null) {
+            System.out.println("No friendly pieces on " + location + ", try again");
+        } else if (p.captures(activePieces, targetX, targetY)) {
+            System.out.println("Captured piece on " + target + " with piece on " + location);
+            whiteTurn = !whiteTurn;
+        } else {
+            System.out.println("Illegal capture, try again");
+        }
+    }
+
+    public ChessPiece returnPieceOn(ArrayList<ChessPiece> activePieces, int pieceX, int pieceY, boolean whiteTurn) {
+        ChessPiece selected = null;
         for (ChessPiece p : activePieces) {
             if (p.getPosX() == pieceX && p.getPosY() == pieceY && p.getOwner().isPlayingWhite() == whiteTurn) {
-                if (p.captures(activePieces, targetX, targetY)) {
-                    System.out.println("Captured piece on " + target + " with piece on " + location);
-                    whiteTurn = !whiteTurn;
-                } else {
-                    System.out.println("Illegal capture, try again");
-                }
+                selected = p;
             }
         }
-        if (!goodSelect) {
-            System.out.println("No friendly pieces on " + location + ", try again");
-        }
+        return selected;
     }
 
     //EFFECTS: sets up the pieces in the correct positions for a standard chess game, asks console for player names!

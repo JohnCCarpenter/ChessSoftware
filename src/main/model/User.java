@@ -56,6 +56,10 @@ public class User {
         return playingWhite;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public ArrayList<String> getThreatened() {
         return threatened;
     }

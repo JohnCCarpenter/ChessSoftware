@@ -46,19 +46,27 @@ public abstract class ChessPiece {
     //          to active pieces passed in
     public boolean captures(ArrayList<ChessPiece> active, int x, int y) {
         if (this.isLegalCapture(active, x, y)) {
+            ChessPiece p = returnPieceOn(active, x, y);
+            p.setCaptured(true);
+            active.remove(p);
+            this.getOwner().getCaptured().add(p);
             this.setPosX(x);
             this.setPosY(y);
-            for (ChessPiece p : active) {
-                if (p.getPosX() == x && p.getPosY() == y) {
-                    p.setCaptured(true);
-                    active.remove(p);
-                    this.getOwner().getCaptured().add(p);
-                }
-            }
             return true;
         } else {
             return false;
         }
+    }
+
+    //EFFECTS: returns the piece in activePieces at square pieceX, pieceY
+    public ChessPiece returnPieceOn(ArrayList<ChessPiece> activePieces, int pieceX, int pieceY) {
+        ChessPiece selected = null;
+        for (ChessPiece p : activePieces) {
+            if (p.getPosX() == pieceX && p.getPosY() == pieceY) {
+                selected = p;
+            }
+        }
+        return selected;
     }
 
     /*//REQUIRES: upgrade is one of "Rook", "Knight", "Bishop", "Queen"
