@@ -1,8 +1,11 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class KnightTest extends ChessPieceTest {
 
@@ -12,6 +15,16 @@ public class KnightTest extends ChessPieceTest {
         setupPieces();
         setupTargets();
         active = new ArrayList<>();
+    }
+
+    @Test
+    public void printSymbolWhiteTest() {
+        assertEquals('N', tester.printSymbol());
+    }
+
+    @Test
+    public void printSymbolBlackTest() {
+        assertEquals('n', enemyTester.printSymbol());
     }
 
     //Knights cannot be blocked so original tests do not apply

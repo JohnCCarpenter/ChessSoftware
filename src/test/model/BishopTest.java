@@ -1,8 +1,11 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BishopTest extends ChessPieceTest {
 
@@ -12,6 +15,16 @@ public class BishopTest extends ChessPieceTest {
         setupPieces();
         setupTargets();
         active = new ArrayList<ChessPiece>();
+    }
+
+    @Test
+    public void printSymbolWhiteTest() {
+        assertEquals('B', tester.printSymbol());
+    }
+
+    @Test
+    public void printSymbolBlackTest() {
+        assertEquals('b', enemyTester.printSymbol());
     }
 
     //Helpers for setup method found below

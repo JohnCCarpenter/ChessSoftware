@@ -7,6 +7,7 @@ import java.util.ArrayList;
 // to console. !!!NOTE ANY CONSOLE INTERACTION NEEDS TO BE IN THE UI CLASS SO GET THOSE OUT OF HERE, TO FIX THIS JUST
 // MAKE THE VOID RETURNS INSTEAD RETURN A STRING AND THEN HAVE THAT STRING PRINTED IN UI PART OF PROJECT!!!
 public class User {
+    private String name;
     private ArrayList<ChessPiece> owned;
     private ArrayList<ChessPiece> captured;
     private ArrayList<String> threatened;
@@ -14,7 +15,8 @@ public class User {
     //If boolean is true this owner is playing with the white pieces, if false they play with black pieces
     private boolean playingWhite;
 
-    public User(boolean isWhite) {
+    public User(boolean isWhite, String name) {
+        this.name = name;
         owned = new ArrayList<ChessPiece>();
         captured = new ArrayList<ChessPiece>();
         threatened = new ArrayList<String>();
@@ -22,7 +24,7 @@ public class User {
         playingWhite = isWhite;
     }
 
-    //EFFECTS: Returns a list of all of the squares that this player is currently threatening to capture on
+    /*//EFFECTS: Returns a list of all of the squares that this player is currently threatening to capture on
     public ArrayList<String> threaten() {
         return null;
     }
@@ -40,7 +42,7 @@ public class User {
     //EFFECTS: prints to the console the list of possible moves that this user can make
     public void displayOptions() {
         //stub
-    }
+    }*/
 
     public ArrayList<ChessPiece> getCaptured() {
         return captured;
@@ -50,16 +52,16 @@ public class User {
         return owned;
     }
 
+    public boolean isPlayingWhite() {
+        return playingWhite;
+    }
+
     public ArrayList<String> getThreatened() {
         return threatened;
     }
 
     public ArrayList<String> getPossibleMoves() {
         return possibleMoves;
-    }
-
-    public boolean isPlayingWhite() {
-        return playingWhite;
     }
 
 }

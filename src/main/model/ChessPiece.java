@@ -129,6 +129,29 @@ public abstract class ChessPiece {
         return blocked;
     }
 
+    //EFFECTS: returns the symbol corresponding to this pieces class, white pieces are capital, black lowercase
+    //         Rook = r, Knight = n, Bishop = b, Pawn = p, Queen = q, King = k
+    public char printSymbol() {
+        char symbol;
+        if (this instanceof Bishop) {
+            symbol = 'B';
+        } else if (this instanceof  Knight) {
+            symbol = 'N';
+        } else if (this instanceof Rook) {
+            symbol = 'R';
+        } else if (this instanceof Queen) {
+            symbol = 'Q';
+        } else if (this instanceof King) {
+            symbol = 'K';
+        } else {
+            symbol = 'P';
+        }
+        if (!(this.getOwner().isPlayingWhite())) {
+            symbol = Character.toLowerCase(symbol);
+        }
+        return symbol;
+    }
+
     //Below here are getters and setters for the ChessPiece set of classes
     public void setCaptured(boolean bool) {
         this.isCaptured = bool;

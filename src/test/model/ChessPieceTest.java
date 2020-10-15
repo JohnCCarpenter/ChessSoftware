@@ -67,8 +67,8 @@ public abstract class ChessPieceTest {
     //Occupier has the same coordinates as legal target move
     ChessPiece occupier;
     ArrayList<ChessPiece> active;
-    User owner = new User(true);
-    User enemyOwner = new User(false);
+    User owner = new User(true, "White");
+    User enemyOwner = new User(false, "Black");
 
     @Test
     //Test that objects get instantiated properly so initialization doesn't need to be checked within later tests

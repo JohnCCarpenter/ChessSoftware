@@ -30,6 +30,16 @@ public class PawnTest extends ChessPieceTest {
         active = new ArrayList<>();
     }
 
+    @Test
+    public void printSymbolWhiteTest() {
+        assertEquals('P', tester.printSymbol());
+    }
+
+    @Test
+    public void printSymbolBlackTest() {
+        assertEquals('p', enemyTester.printSymbol());
+    }
+
     //NEW PAWN TESTS
         //Testing for the captures method
     @Test

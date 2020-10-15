@@ -1,8 +1,11 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RookTest extends ChessPieceTest {
 
@@ -12,6 +15,16 @@ public class RookTest extends ChessPieceTest {
         setupPieces();
         setupTargets();
         active = new ArrayList<>();
+    }
+
+    @Test
+    public void printSymbolWhiteTest() {
+        assertEquals('R', tester.printSymbol());
+    }
+
+    @Test
+    public void printSymbolBlackTest() {
+        assertEquals('r', enemyTester.printSymbol());
     }
 
     //Helpers for setup method found below

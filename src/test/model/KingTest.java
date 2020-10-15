@@ -1,8 +1,11 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class KingTest extends ChessPieceTest {
 
@@ -11,6 +14,16 @@ public class KingTest extends ChessPieceTest {
         setupPieces();
         setupTargets();
         active = new ArrayList<>();
+    }
+
+    @Test
+    public void printSymbolWhiteTest() {
+        assertEquals('K', tester.printSymbol());
+    }
+
+    @Test
+    public void printSymbolBlackTest() {
+        assertEquals('k', enemyTester.printSymbol());
     }
 
     //Kings cannot be blocked since they only move 1 square, and this case falls under occupy tests
