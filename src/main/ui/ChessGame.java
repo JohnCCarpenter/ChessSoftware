@@ -109,14 +109,12 @@ public class ChessGame {
             for (ChessPiece p : whitePlayer.getCaptured()) {
                 System.out.print(p.printSymbol());
                 System.out.print(" ");
-                System.out.println();
             }
         } else {
             System.out.print(blackPlayer.getName() + " has captured ");
             for (ChessPiece p : blackPlayer.getCaptured()) {
                 System.out.print(p.printSymbol());
                 System.out.print(" ");
-                System.out.println();
             }
         }
     }

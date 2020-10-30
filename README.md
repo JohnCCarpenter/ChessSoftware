@@ -33,13 +33,21 @@ that I will need to use while designing this board.
 
 ## User Stories
 
-In the context of a chessboard application:
- - As a user, I want to be able to start a standard game of chess with the pieces where they are meant to be
- - As a user, I want to be able to move a piece from one position to another through a console
- - As a user, I want to be able to capture an enemy's piece with my own
- - As a user, I want to be able to see where the pieces are located on the board
- - As a user, I want to be able to see which pieces I have captured
- - As a user, I want to have the option to learn how different pieces are allowed to move in my game
+In the context of a chessboard application, as a user, I want to be able to:
+ - ~~start a standard game of chess with the pieces where they are meant to be~~
+ - ~~move a piece from one position to another through a console~~
+ - ~~capture an enemy's piece with my own~~
+ - ~~see where the pieces are located on the board~~
+ - ~~see which pieces I have captured~~
+ - learn how different pieces are allowed to move in my game
+ - put my opponents king in check
+ - end the game by putting my opponents king in checkmate
+
+ - save a game's position to continue later (after entering quit)
+ - load a previously saved game based on who was playing it
+ 
+ - save a game's move order to review later
+ - see my record under a particular username
  
 
   
