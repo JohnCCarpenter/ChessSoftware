@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 // ChessPiece abstract class represents a generic chess piece occupying a certain position on a chessboard
@@ -160,6 +163,19 @@ public abstract class ChessPiece {
         return symbol;
     }
 
+    //taken and adjusted from JsonSerializationDemo
+    //EFFECTS: returns chessPiece as a JSON object
+    public JSONObject toJson() {
+        Translator translator = new Translator();
+        JSONObject json = new JSONObject();
+
+        json.put("Piece Type", printSymbol());
+        json.put("Piece Owner", owner);
+        json.put("Piece Location", translator.translateToChessCoord(posX, posY));
+
+        return json;
+    }
+
     //Below here are getters and setters for the ChessPiece set of classes
     public void setCaptured(boolean bool) {
         this.isCaptured = bool;
@@ -200,4 +216,5 @@ public abstract class ChessPiece {
     public User getOwner() {
         return owner;
     }
+
 }

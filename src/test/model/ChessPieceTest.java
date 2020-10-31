@@ -59,16 +59,16 @@ public abstract class ChessPieceTest {
     protected int aboveBoundaryYTargetPosX;
     protected int aboveBoundaryYTargetPosY;
 
-    ChessPiece tester;
-    ChessPiece boundTester;
-    ChessPiece enemyTester;
-    ChessPiece enemyBoundTester;
-    ChessPiece blocker;
+    protected ChessPiece tester;
+    protected ChessPiece boundTester;
+    protected ChessPiece enemyTester;
+    protected ChessPiece enemyBoundTester;
+    protected ChessPiece blocker;
     //Occupier has the same coordinates as legal target move
-    ChessPiece occupier;
-    ArrayList<ChessPiece> active;
-    User owner = new User(true, "White");
-    User enemyOwner = new User(false, "Black");
+    protected ChessPiece occupier;
+    protected ArrayList<ChessPiece> active;
+    protected User owner = new User(true, "White");
+    protected User enemyOwner = new User(false, "Black");
 
     @Test
     //Test that objects get instantiated properly so initialization doesn't need to be checked within later tests
