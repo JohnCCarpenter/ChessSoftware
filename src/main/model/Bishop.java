@@ -14,6 +14,11 @@ public class Bishop extends ChessPiece {
         value = 3;
     }
 
+    public Bishop(int x, int y, User owner, boolean isCaptured, boolean hasMoved) {
+        super(x, y, owner, isCaptured, hasMoved);
+        value = 3;
+    }
+
     @Override
     public boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y) {
         if (abs(x - this.getPosX()) != abs(y - this.getPosY())) {

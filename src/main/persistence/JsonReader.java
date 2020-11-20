@@ -42,59 +42,83 @@ public class JsonReader {
 
     // EFFECTS: parses ChessGame from JSON object and returns it
     private ChessGame parseChessGame(JSONObject jsonObject) {
-        String white = jsonObject.getString("White Player");
-        String black = jsonObject.getString("Black Player");
-        ChessGame cg = new ChessGame(white, black);
-        cg.getActive().clear();
+        JSONObject white = jsonObject.getJSONObject("White Player");
+        JSONObject black = jsonObject.getJSONObject("Black Player");
+        String enPassent = jsonObject.getString("En Passent Square");
+        boolean isWhiteTurn = jsonObject.getBoolean("Is White's Turn");
 
-        JSONArray activePiecesJson = jsonObject.getJSONArray("Active Pieces");
-        addPieces(activePiecesJson, cg);
+        ChessGame cg = new ChessGame(parseUser(white), parseUser(black), enPassent, isWhiteTurn);
+
+        //swapUserCaptures(cg);
 
         return cg;
     }
 
-    //EFFECTS: adds chess pieces from jsonArray to cg
-    private void addPieces(JSONArray jsonArray, ChessGame cg) {
+    // EFFECTS: parses User from JSON object and returns it
+    private User parseUser(JSONObject player) {
+        String name = player.getString("Name");
+        boolean isWhite = player.getBoolean("Is Playing White");
+        User user = new User(isWhite, name);
+        addPiecesToPlayer(player.getJSONArray("Owned Active Pieces"), user);
+        addPiecesToCaptured(player.getJSONArray("Captured Enemy Pieces"), user);
+
+        return user;
+    }
+
+    //EFFECTS: adds pieces from JSONArray to a users captured pieces
+    private void addPiecesToCaptured(JSONArray captures, User user) {
         ArrayList<ChessPiece> list = new ArrayList<ChessPiece>();
-        for (Object jsonObject : jsonArray) {
+        for (Object jsonObject : captures) {
             JSONObject nextPiece = (JSONObject) jsonObject;
-            cg.getActive().add(parseChessPiece(nextPiece, cg));
+            user.getCaptured().add(parseChessPiece(nextPiece, user)); //NEEDS TO BE enemyUser
         }
     }
+
+    //EFFECTS: adds pieces from JSONArray to a users active pieces
+    private void addPiecesToPlayer(JSONArray active, User user) {
+        for (Object jsonObject : active) {
+            JSONObject nextPiece = (JSONObject) jsonObject;
+            user.getOwned().add(parseChessPiece(nextPiece, user));
+        }
+    }
+
 
     //REQUIRES: symbol from JSON is one of P B N R Q K
     //EFFECTS: creates a chesspiece from JSON Object
-    private ChessPiece parseChessPiece(JSONObject jsonObject, ChessGame cg) {
+    private ChessPiece parseChessPiece(JSONObject jsonObject, User user) {
         Translator t = new Translator();
         String symbol = jsonObject.getString("Piece Type");
-        String owner = jsonObject.getString("Piece Owner");
         String location = jsonObject.getString("Piece Location");
-        User player = assignOwner(cg, owner);
+        boolean captured = jsonObject.getBoolean("Is Captured");
+        boolean moved = jsonObject.getBoolean("Has Moved");
+        User player = user;
 
-        if (symbol == "P") {
-            return new Pawn(t.translateToXCoord(location), t.translateToYCoord(location), player);
-        } else if (symbol == "B") {
-            return new Bishop(t.translateToXCoord(location), t.translateToYCoord(location), player);
-        } else if (symbol == "N") {
-            return new Knight(t.translateToXCoord(location), t.translateToYCoord(location), player);
-        } else if (symbol == "R") {
-            return new Rook(t.translateToXCoord(location), t.translateToYCoord(location), player);
-        } else if (symbol == "Q") {
-            return new Queen(t.translateToXCoord(location), t.translateToYCoord(location), player);
-        } else if (symbol == "K") {
-            return new King(t.translateToXCoord(location), t.translateToYCoord(location), player);
+        if (symbol.equals("P")) {
+            return new Pawn(t.translateToXCoord(location), t.translateToYCoord(location), player, captured, moved);
+        } else if (symbol.equals("B")) {
+            return new Bishop(t.translateToXCoord(location), t.translateToYCoord(location), player, captured, moved);
+        } else if (symbol.equals("N")) {
+            return new Knight(t.translateToXCoord(location), t.translateToYCoord(location), player, captured, moved);
+        } else if (symbol.equals("R")) {
+            return new Rook(t.translateToXCoord(location), t.translateToYCoord(location), player, captured, moved);
+        } else if (symbol.equals("Q")) {
+            return new Queen(t.translateToXCoord(location), t.translateToYCoord(location), player, captured, moved);
+        } else if (symbol.equals("K")) {
+            return new King(t.translateToXCoord(location), t.translateToYCoord(location), player, captured, moved);
         } else {
             return null;
         }
     }
 
-    private User assignOwner(ChessGame cg, String owner) {
-        if (owner == cg.getWhitePlayer().getName()) {
-            return cg.getWhitePlayer();
-        } else if (owner == cg.getBlackPlayer().getName()) {
-            return cg.getBlackPlayer();
-        } else {
-            return null;
+    //EFFECTS: since captures are instantiated in the load as the wrong colour, this method
+    //         swaps the owners of all of the captured pieces in chess game to the other player
+    //         in chess game
+    private void swapUserCaptures(ChessGame cg) {
+        for (ChessPiece cp : cg.getWhitePlayer().getCaptured()) {
+            cp.setOwner(cg.getBlackPlayer());
+        }
+        for (ChessPiece cp : cg.getBlackPlayer().getCaptured()) {
+            cp.setOwner(cg.getWhitePlayer());
         }
     }
 }

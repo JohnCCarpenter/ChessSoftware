@@ -14,7 +14,8 @@ public class ChessGame {
     private User whitePlayer;
     private User blackPlayer;
 
-    boolean isWhiteTurn = true;
+    private boolean isWhiteTurn;
+    private String enPassent;
 
     //White pawns
     private ChessPiece wp1;
@@ -62,6 +63,10 @@ public class ChessGame {
         activePieces = new ArrayList<>();
         players.add(whitePlayer);
         players.add(blackPlayer);
+
+        isWhiteTurn = true;
+        enPassent = "-";
+
         initializePawns();
         initializeOthers();
         givePiecesToWhite();
@@ -70,19 +75,19 @@ public class ChessGame {
     }
 
     //Alternate constructor !!!
-    //EFFECTS: sets up ChessGame with given pieces
-    public ChessGame(String whiteName, String blackName, ArrayList<ChessPiece> loadedPieces) {
-        whitePlayer = new User(true, whiteName);
-        blackPlayer = new User(false, blackName);
+    //EFFECTS: sets up ChessGame with given players, enPassentSquare and Turn value
+    public ChessGame(User whitePlayer, User blackPlayer, String enPassent, Boolean isWhiteTurn) {
+        this.enPassent = enPassent;
+        this.isWhiteTurn = isWhiteTurn;
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
+
         players = new ArrayList<>();
-        activePieces = loadedPieces;
         players.add(whitePlayer);
         players.add(blackPlayer);
-        giveCustomPiecesToOwners(loadedPieces);
-        //initializeOthers();
-        //givePiecesToWhite();
-        //givePiecesToBlack();
-        //setActiveList();
+
+        activePieces = new ArrayList<>();
+        setActiveList();
     }
 
     //EFFECTS: updates the active list to be the owned pieces of black and white
@@ -148,22 +153,11 @@ public class ChessGame {
     //EFFECTS: returns users and pieces in this game as JSON array
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("White Player", whitePlayer);
-        json.put("Black Player", blackPlayer);
-        json.put("Active Pieces", activePiecesToJson());
+        json.put("Is White's Turn", isWhiteTurn);
+        json.put("En Passent Square", enPassent);
+        json.put("White Player", whitePlayer.toJson());
+        json.put("Black Player", blackPlayer.toJson());
         return json;
-    }
-
-    //taken and adjusted from JsonSerializationDemo
-    //EFFECTS: returns active pieces in this game as JSON array
-    public JSONArray activePiecesToJson() {
-        JSONArray jsonArray = new JSONArray();
-
-        for (ChessPiece p : activePieces) {
-            jsonArray.put(p.toJson());
-        }
-
-        return jsonArray;
     }
 
     //EFFECTS: sets up the pawns in the correct position for a standard chess game
@@ -284,6 +278,16 @@ public class ChessGame {
     //EFFECTS: sets isWhiteTurn to bool
     public void setIsWhiteTurn(boolean bool) {
         isWhiteTurn = bool;
+    }
+
+    //EFFECTS: sets enPassent to square
+    public void setEnPassent(String square) {
+        enPassent = square;
+    }
+
+    //EFFECTS: gets enPassent
+    public String getEnPassent() {
+        return enPassent;
     }
 
     /*//EFFECTS: returns whether one of the Kings is currently in check

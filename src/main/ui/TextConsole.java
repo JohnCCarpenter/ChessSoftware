@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 //ChessGame sets up and contains information about a standard game of chess that is being played between 2 players
 public class TextConsole {
-    public static final String DEFAULT_FILE = "lastSave.json";
+    public static final String DEFAULT_FILE = "./data/lastSave.json";
 
     private Scanner input;
     private ChessGame thisGame;
@@ -75,23 +75,31 @@ public class TextConsole {
         System.out.println("Do you want to save this game?");
         String save = input.next();
         save.toLowerCase();
-        if (save == "yes") {
+        if (save.equals("yes")) {
             try {
                 saveGame();
+                System.out.println("Saved game successfully");
             } catch (FileNotFoundException fnfe) {
-                //do nothing
+                System.out.println("File not found");
+                saveGameQuery();
             } catch (IOException ioe) {
-                //do nothing!!!
+                System.out.println("IO exception thrown");
+                saveGameQuery();
             }
         }
     }
 
     //EFFECTS: saves game to DEFAULT_FILE
-    private void saveGame() throws IOException {
+    private void saveGame() throws IOException, FileNotFoundException {
         JsonWriter writer = new JsonWriter(DEFAULT_FILE);
-        writer.open();
-        writer.write(thisGame);
-        writer.close();
+        try {
+            writer.open();
+            writer.write(thisGame);
+            System.out.println("Saved game to " + DEFAULT_FILE);
+            writer.close();
+        } catch (IOException ioe) {
+            System.out.println("Unable to save game to: " + DEFAULT_FILE);
+        }
     }
 
     //REQUIRES: Called with action as one of "move" or "capture" or "list"

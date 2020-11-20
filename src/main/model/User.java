@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 // User is a class representing a player at a chess board, with information about what pieces they own and which
@@ -7,7 +10,7 @@ import java.util.ArrayList;
 // to console. !!!NOTE ANY CONSOLE INTERACTION NEEDS TO BE IN THE UI CLASS SO GET THOSE OUT OF HERE, TO FIX THIS JUST
 // MAKE THE VOID RETURNS INSTEAD RETURN A STRING AND THEN HAVE THAT STRING PRINTED IN UI PART OF PROJECT!!!
 public class User {
-    private String name;
+    private final String name;
     private ArrayList<ChessPiece> owned;
     private ArrayList<ChessPiece> captured;
     private ArrayList<String> threatened;
@@ -19,9 +22,47 @@ public class User {
         this.name = name;
         owned = new ArrayList<ChessPiece>();
         captured = new ArrayList<ChessPiece>();
+        playingWhite = isWhite;
+
         threatened = new ArrayList<String>();
         possibleMoves = new ArrayList<String>();
-        playingWhite = isWhite;
+    }
+
+    //taken and adjusted from JsonSerializationDemo
+    //EFFECTS: returns this player as a JSON object
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("Name", name);
+        jsonObject.put("Is Playing White", playingWhite);
+        jsonObject.put("Owned Active Pieces", ownedToJson());
+        jsonObject.put("Captured Enemy Pieces", capturedToJson());
+
+        return jsonObject;
+    }
+
+    //taken and adjusted from JsonSerializationDemo
+    //EFFECTS: returns owned pieces in this game as JSON array
+    public JSONArray ownedToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (ChessPiece p : owned) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    //taken and adjusted from JsonSerializationDemo
+    //EFFECTS: returns owned pieces in this game as JSON array
+    public JSONArray capturedToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (ChessPiece p : captured) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
     }
 
     /*//EFFECTS: Returns a list of all of the squares that this player is currently threatening to capture on

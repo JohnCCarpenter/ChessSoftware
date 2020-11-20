@@ -15,6 +15,11 @@ public class Queen extends ChessPiece {
         value = 9;
     }
 
+    public Queen(int x, int y, User owner, boolean isCaptured, boolean hasMoved) {
+        super(x, y, owner, isCaptured, hasMoved);
+        value = 9;
+    }
+
     @Override
     public boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y) {
         if (((x - this.getPosX()) == 0) == ((y - this.getPosY()) == 0)) {

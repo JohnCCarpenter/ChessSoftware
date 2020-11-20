@@ -22,6 +22,11 @@ public class Pawn extends ChessPiece {
         value = 1;
     }
 
+    public Pawn(int x, int y, User owner, boolean isCaptured, boolean hasMoved) {
+        super(x, y, owner, isCaptured, hasMoved);
+        value = 1;
+    }
+
     @Override
     public boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y) {
         if (!(abs(x - this.getPosX()) == 0)) {

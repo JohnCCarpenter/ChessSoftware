@@ -31,11 +31,10 @@ public class Main {
             reader = new JsonReader(DEFAULT_FILE);
             try {
                 loadedGame = reader.read();
+                instance = new TextConsole(loadedGame);
             } catch (IOException ioe) {
                 System.out.println("Save file read unsuccessful");
-                loadedGame = null;
             }
-            instance = new TextConsole(loadedGame);
         }
 
     }

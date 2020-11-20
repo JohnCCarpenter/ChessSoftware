@@ -54,14 +54,17 @@ public class ChessGameTest {
 
         active = new ArrayList<ChessPiece>();
 
-        active.add(white1);
-        active.add(white2);
-        active.add(white3);
-        active.add(black1);
-        active.add(black2);
-        active.add(black3);
+        owner.getOwned().add(white1);
+        owner.getOwned().add(white2);
+        owner.getOwned().add(white3);
+        enemyOwner.getOwned().add(black1);
+        enemyOwner.getOwned().add(black2);
+        enemyOwner.getOwned().add(black3);
 
-        ChessGame customBoard = new ChessGame("White", "Black", active);
+        ChessGame customBoard = new ChessGame(owner, enemyOwner, "e3", false);
+
+        assertEquals("e3", customBoard.getEnPassent());
+        assertFalse(customBoard.getIsWhiteTurn());
 
         assert isContained(customBoard.getBlackPlayer().getOwned(), black1);
         assert isContained(customBoard.getBlackPlayer().getOwned(), black2);

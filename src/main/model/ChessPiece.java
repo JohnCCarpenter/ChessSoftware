@@ -29,6 +29,17 @@ public abstract class ChessPiece {
         hasMoved = false;
     }
 
+    //REQUIRES: 0 <= x <= 7 & 0 <= y <= 7
+    //EFFECTS: Constructs a generic ChessPiece object at coordinates (x, y) on a chess board, owned by owner
+    //          this constructor also contains information about whether the piece has moved or been captured
+    public ChessPiece(int x, int y, User owner, boolean isCaptured, boolean hasMoved) {
+        posX = x;
+        posY = y;
+        this.owner = owner;
+        this.isCaptured = isCaptured;
+        this.hasMoved = hasMoved;
+    }
+
     //MODIFIES: this
     //EFFECTS: Changes pieces position to coordinates (x, y) on a chess board
     //         returns true if the move is legal to play in the game according to active pieces passed in
@@ -52,6 +63,7 @@ public abstract class ChessPiece {
             ChessPiece p = returnPieceOn(active, x, y);
             p.setCaptured(true);
             active.remove(p);
+            p.getOwner().getOwned().remove(p);
             this.getOwner().getCaptured().add(p);
             this.setPosX(x);
             this.setPosY(y);
@@ -142,23 +154,23 @@ public abstract class ChessPiece {
 
     //EFFECTS: returns the symbol corresponding to this pieces class, white pieces are capital, black lowercase
     //         Rook = r, Knight = n, Bishop = b, Pawn = p, Queen = q, King = k
-    public char printSymbol() {
-        char symbol;
+    public String printSymbol() {
+        String symbol;
         if (this instanceof Bishop) {
-            symbol = 'B';
+            symbol = "B";
         } else if (this instanceof  Knight) {
-            symbol = 'N';
+            symbol = "N";
         } else if (this instanceof Rook) {
-            symbol = 'R';
+            symbol = "R";
         } else if (this instanceof Queen) {
-            symbol = 'Q';
+            symbol = "Q";
         } else if (this instanceof King) {
-            symbol = 'K';
+            symbol = "K";
         } else {
-            symbol = 'P';
+            symbol = "P";
         }
         if (!(this.getOwner().isPlayingWhite())) {
-            symbol = Character.toLowerCase(symbol);
+            symbol = symbol.toLowerCase();
         }
         return symbol;
     }
@@ -169,9 +181,10 @@ public abstract class ChessPiece {
         Translator translator = new Translator();
         JSONObject json = new JSONObject();
 
-        json.put("Piece Type", printSymbol());
-        json.put("Piece Owner", owner);
+        json.put("Piece Type", printSymbol().toUpperCase());
         json.put("Piece Location", translator.translateToChessCoord(posX, posY));
+        json.put("Is Captured", isCaptured);
+        json.put("Has Moved", hasMoved);
 
         return json;
     }
@@ -215,6 +228,10 @@ public abstract class ChessPiece {
 
     public User getOwner() {
         return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
 }

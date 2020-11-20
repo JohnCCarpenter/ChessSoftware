@@ -15,6 +15,11 @@ public class Rook extends ChessPiece {
         value = 5;
     }
 
+    public Rook(int x, int y, User owner, boolean isCaptured, boolean hasMoved) {
+        super(x, y, owner, isCaptured, hasMoved);
+        value = 5;
+    }
+
     @Override
     public boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y) {
         if (((x - this.getPosX()) == 0) == ((y - this.getPosY()) == 0)) {

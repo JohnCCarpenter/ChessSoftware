@@ -14,6 +14,11 @@ public class King extends ChessPiece {
         value = 10;
     }
 
+    public King(int x, int y, User owner, boolean isCaptured, boolean hasMoved) {
+        super(x, y, owner, isCaptured, hasMoved);
+        value = 10;
+    }
+
     @Override
     //NEED TO ADD FUNCTIONALITY TO NOT ALLOW MOVES ONTO THREATENED SQUARES
     public boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y) {
