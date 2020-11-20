@@ -1,4 +1,4 @@
-package gui;
+package ui.gui;
 
 public class Border {
 }

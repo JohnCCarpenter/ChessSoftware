@@ -1,11 +1,11 @@
-package gui;
+package ui.gui;
 
 import model.ChessGame;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static gui.VisualConsole.BOARD_SIZE;
+import static ui.gui.VisualConsole.BOARD_SIZE;
 
 public class PlayerDisplay extends JPanel {
     ChessGame currentGame;

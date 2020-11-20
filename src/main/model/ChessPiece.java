@@ -48,6 +48,7 @@ public abstract class ChessPiece implements Writable {
         if (this.isLegalMove(active, x, y)) {
             this.setPosX(x);
             this.setPosY(y);
+            this.setHasMoved(true);
             return true;
         } else {
             return false;

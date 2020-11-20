@@ -1,19 +1,17 @@
-package gui;
+package ui.gui;
 
 import model.ChessGame;
 
 import javax.swing.*;
 
 import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 //Displays the entirety of the chess game GUI
 public class VisualConsole extends JFrame implements ActionListener {
     private static final Point CENTRE_SCREEN = new Point(400, 150);
-    public static final Dimension BOARD_SIZE = new Dimension(400, 400);
+    public static final Dimension BOARD_SIZE = new Dimension(700, 700);
 
     //the User display portion of the frame, one for white player and one for black player
     private JPanel white;
