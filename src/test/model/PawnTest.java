@@ -32,12 +32,12 @@ public class PawnTest extends ChessPieceTest {
 
     @Test
     public void printSymbolWhiteTest() {
-        assertEquals('P', tester.symbol());
+        assertEquals("P", tester.symbol());
     }
 
     @Test
     public void printSymbolBlackTest() {
-        assertEquals('p', enemyTester.symbol());
+        assertEquals("p", enemyTester.symbol());
     }
 
     //NEW PAWN TESTS

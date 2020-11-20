@@ -111,6 +111,17 @@ public class ChessGame implements Writable {
         return selected;
     }
 
+    //EFFECTS: returns the piece on given x y coords regardless of player, or null
+    public ChessPiece returnPieceOn(int pieceX, int pieceY) {
+        ChessPiece selected = null;
+        for (ChessPiece p : activePieces) {
+            if (p.getPosX() == pieceX && p.getPosY() == pieceY) {
+                selected = p;
+            }
+        }
+        return selected;
+    }
+
     //MODIFIES: piece p in activePieces on location
     //EFFECTS: moves the piece on location to target
     //         throw IllegalMoveException for bad movement, throw BadSelectException for bad select

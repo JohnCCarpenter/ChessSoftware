@@ -13,6 +13,7 @@ import java.util.Objects;
 // MAKE THE VOID RETURNS INSTEAD RETURN A STRING AND THEN HAVE THAT STRING PRINTED IN UI PART OF PROJECT!!!
 public class User implements Writable {
     private final String name;
+    private ChessGame currentGame;
     private ArrayList<ChessPiece> owned;
     private ArrayList<ChessPiece> captured;
     private ArrayList<String> threatened;

@@ -43,11 +43,13 @@ In the context of a chessboard application, as a user, I want to be able to:
  - put my opponents king in check
  - end the game by putting my opponents king in checkmate
 
- - save a game's position to continue later (after entering quit)
- - load a previously saved game based on who was playing it
+ - ~~save a game's position to continue later (after entering quit)~~
+ - ~~load a previously saved game based on who was playing it~~
  
  - save a game's move order to review later
  - see my record under a particular username
+ 
+ - control the pieces in the game through a graphical user interface
  
 
   
