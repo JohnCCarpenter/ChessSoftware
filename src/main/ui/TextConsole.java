@@ -2,12 +2,10 @@ package ui;
 
 import model.*;
 import exceptions.*;
-import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 //ChessGame sets up and contains information about a standard game of chess that is being played between 2 players
@@ -133,13 +131,13 @@ public class TextConsole {
         if (thisGame.getIsWhiteTurn()) {
             System.out.print(thisGame.getWhitePlayer().getName() + " has captured ");
             for (ChessPiece p : thisGame.getWhitePlayer().getCaptured()) {
-                System.out.print(p.printSymbol());
+                System.out.print(p.symbol());
                 System.out.print(" ");
             }
         } else {
             System.out.print(thisGame.getBlackPlayer().getName() + " has captured ");
             for (ChessPiece p : thisGame.getBlackPlayer().getCaptured()) {
-                System.out.print(p.printSymbol());
+                System.out.print(p.symbol());
                 System.out.print(" ");
             }
         }
@@ -157,7 +155,7 @@ public class TextConsole {
                 System.out.print(" ");
                 for (ChessPiece p : thisGame.getActive()) {
                     if (p.getPosX() == y && p.getPosY() == x) {
-                        System.out.print(p.printSymbol());
+                        System.out.print(p.symbol());
                         occupied = true;
                     }
                 }

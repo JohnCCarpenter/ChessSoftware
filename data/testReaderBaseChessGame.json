@@ -1,0 +1,210 @@
+{
+  "Is White's Turn": true,
+  "White Player": {
+    "Captured Enemy Pieces": [],
+    "Owned Active Pieces": [
+      {
+        "Piece Location": "a2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "b2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "c2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "d2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "e2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "f2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "g2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "h2",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "a1",
+        "Is Captured": false,
+        "Piece Type": "R",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "h1",
+        "Is Captured": false,
+        "Piece Type": "R",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "b1",
+        "Is Captured": false,
+        "Piece Type": "N",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "g1",
+        "Is Captured": false,
+        "Piece Type": "N",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "c1",
+        "Is Captured": false,
+        "Piece Type": "B",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "f1",
+        "Is Captured": false,
+        "Piece Type": "B",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "d1",
+        "Is Captured": false,
+        "Piece Type": "Q",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "e1",
+        "Is Captured": false,
+        "Piece Type": "K",
+        "Has Moved": false
+      }
+    ],
+    "Name": "Boring",
+    "Is Playing White": true
+  },
+  "En Passent Square": "-",
+  "Black Player": {
+    "Captured Enemy Pieces": [],
+    "Owned Active Pieces": [
+      {
+        "Piece Location": "a7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "b7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "c7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "d7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "e7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "f7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "g7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "h7",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "a8",
+        "Is Captured": false,
+        "Piece Type": "R",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "h8",
+        "Is Captured": false,
+        "Piece Type": "R",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "b8",
+        "Is Captured": false,
+        "Piece Type": "N",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "g8",
+        "Is Captured": false,
+        "Piece Type": "N",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "c8",
+        "Is Captured": false,
+        "Piece Type": "B",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "f8",
+        "Is Captured": false,
+        "Piece Type": "B",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "d8",
+        "Is Captured": false,
+        "Piece Type": "Q",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "e8",
+        "Is Captured": false,
+        "Piece Type": "K",
+        "Has Moved": false
+      }
+    ],
+    "Name": "Yuckers",
+    "Is Playing White": false
+  }
+}

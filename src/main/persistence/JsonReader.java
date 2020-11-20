@@ -49,7 +49,7 @@ public class JsonReader {
 
         ChessGame cg = new ChessGame(parseUser(white), parseUser(black), enPassent, isWhiteTurn);
 
-        //swapUserCaptures(cg);
+        swapUserCaptures(cg);
 
         return cg;
     }
@@ -70,7 +70,7 @@ public class JsonReader {
         ArrayList<ChessPiece> list = new ArrayList<ChessPiece>();
         for (Object jsonObject : captures) {
             JSONObject nextPiece = (JSONObject) jsonObject;
-            user.getCaptured().add(parseChessPiece(nextPiece, user)); //NEEDS TO BE enemyUser
+            user.getCaptured().add(parseChessPiece(nextPiece, user));
         }
     }
 
@@ -113,7 +113,7 @@ public class JsonReader {
     //EFFECTS: since captures are instantiated in the load as the wrong colour, this method
     //         swaps the owners of all of the captured pieces in chess game to the other player
     //         in chess game
-    private void swapUserCaptures(ChessGame cg) {
+    public void swapUserCaptures(ChessGame cg) {
         for (ChessPiece cp : cg.getWhitePlayer().getCaptured()) {
             cp.setOwner(cg.getBlackPlayer());
         }

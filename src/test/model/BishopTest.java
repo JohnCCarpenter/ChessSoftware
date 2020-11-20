@@ -19,12 +19,12 @@ public class BishopTest extends ChessPieceTest {
 
     @Test
     public void printSymbolWhiteTest() {
-        assertEquals('B', tester.printSymbol());
+        assertEquals('B', tester.symbol());
     }
 
     @Test
     public void printSymbolBlackTest() {
-        assertEquals('b', enemyTester.printSymbol());
+        assertEquals('b', enemyTester.symbol());
     }
 
     //Helpers for setup method found below

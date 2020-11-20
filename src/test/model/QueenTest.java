@@ -19,12 +19,12 @@ public class QueenTest extends ChessPieceTest {
 
     @Test
     public void printSymbolWhiteTest() {
-        assertEquals('Q', tester.printSymbol());
+        assertEquals('Q', tester.symbol());
     }
 
     @Test
     public void printSymbolBlackTest() {
-        assertEquals('q', enemyTester.printSymbol());
+        assertEquals('q', enemyTester.symbol());
     }
 
     //Helpers for setup method found below

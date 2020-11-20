@@ -2,14 +2,16 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // User is a class representing a player at a chess board, with information about what pieces they own and which
 // enemy pieces they have captured, as well as what their name is. Can return any of this information and display it
 // to console. !!!NOTE ANY CONSOLE INTERACTION NEEDS TO BE IN THE UI CLASS SO GET THOSE OUT OF HERE, TO FIX THIS JUST
 // MAKE THE VOID RETURNS INSTEAD RETURN A STRING AND THEN HAVE THAT STRING PRINTED IN UI PART OF PROJECT!!!
-public class User {
+public class User implements Writable {
     private final String name;
     private ArrayList<ChessPiece> owned;
     private ArrayList<ChessPiece> captured;
@@ -65,26 +67,38 @@ public class User {
         return jsonArray;
     }
 
-    /*//EFFECTS: Returns a list of all of the squares that this player is currently threatening to capture on
+    //EFFECTS: Returns a list of all of the squares that this player is currently threatening to capture on
     public ArrayList<String> threaten() {
         return null;
     }
 
-    //EFFECTS: prints to the console the list of ChessPieces that have been captured by this user
-    public void displayCaptures() {
-        //stub
+//    //EFFECTS: Returns a list of all of the possible moves for this user
+//    public ArrayList<Move> generateMoves() {
+//
+//    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return isPlayingWhite() == user.isPlayingWhite()
+                && getName().equals(user.getName())
+                && getOwned().equals(user.getOwned())
+                && getCaptured().equals(user.getCaptured());
     }
 
-    //EFFECTS: prints to the console the list of active ChessPieces that this user owns, as well as their locations
-    public void displayOwned() {
-        //stub
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getOwned(), getCaptured(), isPlayingWhite());
     }
 
-    //EFFECTS: prints to the console the list of possible moves that this user can make
-    public void displayOptions() {
-        //stub
-    }*/
-
+    //GETTERS AND SETTERS
     public ArrayList<ChessPiece> getCaptured() {
         return captured;
     }

@@ -1,0 +1,42 @@
+{
+  "Is White's Turn": false,
+  "White Player": {
+    "Captured Enemy Pieces": [],
+    "Owned Active Pieces": [
+      {
+        "Piece Location": "d4",
+        "Is Captured": false,
+        "Piece Type": "K",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "a1",
+        "Is Captured": false,
+        "Piece Type": "Q",
+        "Has Moved": false
+      }
+    ],
+    "Name": "John",
+    "Is Playing White": true
+  },
+  "En Passent Square": "e3",
+  "Black Player": {
+    "Captured Enemy Pieces": [],
+    "Owned Active Pieces": [
+      {
+        "Piece Location": "e4",
+        "Is Captured": false,
+        "Piece Type": "P",
+        "Has Moved": false
+      },
+      {
+        "Piece Location": "a8",
+        "Is Captured": false,
+        "Piece Type": "B",
+        "Has Moved": false
+      }
+    ],
+    "Name": "Buddy",
+    "Is Playing White": false
+  }
+}

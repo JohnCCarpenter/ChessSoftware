@@ -4,11 +4,14 @@ import exceptions.BadSelectException;
 import exceptions.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class ChessGame {
+public class ChessGame implements Writable {
     private ArrayList<ChessPiece> activePieces;
+
     private ArrayList<User> players;
 
     private User whitePlayer;
@@ -253,6 +256,28 @@ public class ChessGame {
         whitePlayer.getOwned().add(wk);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessGame chessGame = (ChessGame) o;
+        return isWhiteTurn == chessGame.getIsWhiteTurn()
+                && players.equals(chessGame.getPlayers())
+                && activePieces.equals(chessGame.getActive())
+                && whitePlayer.equals(chessGame.getWhitePlayer())
+                && blackPlayer.equals(chessGame.getBlackPlayer())
+                && enPassent.equals(chessGame.getEnPassent());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(activePieces, players, whitePlayer, blackPlayer, isWhiteTurn, enPassent);
+    }
+
     //BASIC GETTERS AND SETTERS
 
     //EFFECTS: returns active pieces
@@ -289,6 +314,15 @@ public class ChessGame {
     public String getEnPassent() {
         return enPassent;
     }
+
+    public ArrayList<User> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<User> players) {
+        this.players = players;
+    }
+
 
     /*//EFFECTS: returns whether one of the Kings is currently in check
     public boolean check() {

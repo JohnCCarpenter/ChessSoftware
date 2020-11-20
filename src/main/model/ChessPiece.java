@@ -1,16 +1,17 @@
 package model;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // ChessPiece abstract class represents a generic chess piece occupying a certain position on a chessboard
 // it also has the ability to move from one location to another and capture from it's current location at another
 // location. The legality of the moves and captures MUST be implemented in the subclasses representing the 6 distinct
 // types of chess pieces. The help function prints the specifications of this legality to the console so that the user
 // may learn how to play the game.
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Writable {
 
     protected boolean isCaptured;
     protected boolean hasMoved;
@@ -154,7 +155,7 @@ public abstract class ChessPiece {
 
     //EFFECTS: returns the symbol corresponding to this pieces class, white pieces are capital, black lowercase
     //         Rook = r, Knight = n, Bishop = b, Pawn = p, Queen = q, King = k
-    public String printSymbol() {
+    public String symbol() {
         String symbol;
         if (this instanceof Bishop) {
             symbol = "B";
@@ -181,12 +182,35 @@ public abstract class ChessPiece {
         Translator translator = new Translator();
         JSONObject json = new JSONObject();
 
-        json.put("Piece Type", printSymbol().toUpperCase());
+        json.put("Piece Type", symbol().toUpperCase());
         json.put("Piece Location", translator.translateToChessCoord(posX, posY));
         json.put("Is Captured", isCaptured);
         json.put("Has Moved", hasMoved);
 
         return json;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ChessPiece)) {
+            return false;
+        }
+        ChessPiece that = (ChessPiece) o;
+        return symbol().equals(that.symbol())
+                && isCaptured == that.getIsCaptured()
+                && hasMoved == that.getHasMoved()
+                && posX == that.getPosX()
+                && posY == that.getPosY()
+                && value == that.getValue()
+                && owner.getName().equals(that.getOwner().getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isCaptured, hasMoved, posX, posY, value, owner.getName());
     }
 
     //Below here are getters and setters for the ChessPiece set of classes

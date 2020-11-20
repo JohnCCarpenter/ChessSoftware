@@ -75,7 +75,7 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "g1",
+                "Piece Location": "f3",
                 "Is Captured": false,
                 "Piece Type": "N",
                 "Has Moved": false
@@ -131,7 +131,7 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "e7",
+                "Piece Location": "e5",
                 "Is Captured": false,
                 "Piece Type": "P",
                 "Has Moved": false
