@@ -22,6 +22,9 @@ public class ChessBoard extends JPanel {
     private GridLayout boardLayout = new GridLayout(0, 8);
     private ChessGame game;
     private JButton[][] chessBoardSquares = new JButton[8][8];
+    private VisualConsole buttonListener;
+    int currentIndexX;
+    int currentIndexY;
 
     BufferedImage white = new BufferedImage(100, 100, 1);
     Graphics2D graphics = white.createGraphics();
@@ -29,8 +32,9 @@ public class ChessBoard extends JPanel {
     Graphics2D otherGraphics = black.createGraphics();
 
     //EFFECTS: creates a chessboard with a given chess game on it
-    public ChessBoard(ChessGame cg) {
+    public ChessBoard(ChessGame cg, VisualConsole vc) {
 
+        buttonListener = vc;
         game = cg;
         this.setPreferredSize(new Dimension(BOARD_SIZE));
         this.setLayout(boardLayout);
@@ -42,15 +46,15 @@ public class ChessBoard extends JPanel {
     // Code for board visualization was adjusted from user Andrew Thompson's post on stack overflow
     // https://stackoverflow.com/questions/21077322/create-a-chess-board-with-jpanel
     //EFFECTS: Creates a new JPanel overlay with all the active pieces in the right spots
-    private void visualizeBoard() {
+    public void visualizeBoard() {
         ImageIcon piece = new ImageIcon("./data/BlackPawn.png");
 
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
-                JButton b = new JButton();
-                b.setMargin(buttonMargin);
-
+                currentIndexX = ii;
+                currentIndexY = jj;
+                JButton b = makeButton(buttonMargin, ii, jj);
 
                 // our chess pieces are 64x64 px in size, so we'll
                 // 'fill this in' using a transparent icon..
@@ -75,6 +79,16 @@ public class ChessBoard extends JPanel {
                 this.add(chessBoardSquares[ii][jj]);
             }
         }
+    }
+
+    //EFFECTS: creates a button
+    private JButton makeButton(Insets buttonMargin, int ii, int jj) {
+        JButton b = new JButton();
+        b.setMargin(buttonMargin);
+        b.addActionListener(buttonListener);
+        b.setLocation(ii, jj);
+        b.setActionCommand("Select");
+        return b;
     }
 
     //EFFECTS: draws an image to the drawer

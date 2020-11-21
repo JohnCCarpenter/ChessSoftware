@@ -1,17 +1,24 @@
 package ui.gui;
 
 import model.ChessGame;
+import model.Translator;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import static ui.TextConsole.DEFAULT_FILE;
 
 //Displays the entirety of the chess game GUI
 public class VisualConsole extends JFrame implements ActionListener {
     private static final Point CENTRE_SCREEN = new Point(400, 150);
     public static final Dimension BOARD_SIZE = new Dimension(700, 700);
+
 
     //the User display portion of the frame, one for white player and one for black player
     private JPanel white;
@@ -23,7 +30,8 @@ public class VisualConsole extends JFrame implements ActionListener {
     //retain reference to the game that is being played on the GUI
     private ChessGame currentGame;
 
-
+    private String firstSelect;
+    private String secondSelect;
 
 
     public VisualConsole() {
@@ -41,34 +49,17 @@ public class VisualConsole extends JFrame implements ActionListener {
 
         //add chess board and players to boardandplayers
         //boardAndPlayers.setLayout(new BoxLayout(boardAndPlayers, BoxLayout.Y_AXIS));
-        chessBoard = new ChessBoard(currentGame);
+        chessBoard = new ChessBoard(currentGame, this);
         boardAndPlayers.add(chessBoard);
 
-        //Create the white and black playerDisplay and add them to board and players
-        white = new PlayerDisplay(currentGame, true);
-        black = new PlayerDisplay(currentGame, false);
-
-        //NOTE THAT THESE NEED TO BE ADDED TO THEIR OWN SUBGROUP SO THEY STACK ABOVE ONE ANOTHER
-        playerContainer.setLayout(new BoxLayout(playerContainer, BoxLayout.Y_AXIS));
-        playerContainer.add(white);
-        playerContainer.add(black);
-        playerContainer.setVisible(true);
-        boardAndPlayers.add(playerContainer);
-
-
-
-        //Initialize save and load buttons and add them to saveStateManager
-        JButton save = new JButton("Save");
-        JButton load = new JButton("Load");
-        saveStateManager.add(save);
-        saveStateManager.add(load);
+        createPlayerDisplays(playerContainer, boardAndPlayers);
+        createSaveStateButtons(saveStateManager);
 
         //Add components to a box layout panel and then add to frame
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(boardAndPlayers);
         container.add(saveStateManager);
         frame.add(container);
-
 
 
         //SET SIZE AND POSITION
@@ -83,6 +74,34 @@ public class VisualConsole extends JFrame implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    //EFFECTS: //Initialize save and load and new buttons and add them to saveStateManager
+    private void createSaveStateButtons(JPanel saveStateManager) {
+        JButton save = new JButton("Save");
+        JButton load = new JButton("Load");
+        JButton neww = new JButton("New");
+        save.addActionListener(this);
+        save.setActionCommand("Save");
+        load.addActionListener(this);
+        load.setActionCommand("Load");
+        neww.addActionListener(this);
+        neww.setActionCommand("New");
+        saveStateManager.add(save);
+        saveStateManager.add(load);
+        saveStateManager.add(neww);
+    }
+
+    //EFFECTS: //Create the white and black playerDisplay and add them to board and players
+    private void createPlayerDisplays(JPanel playerContainer, JPanel boardAndPlayers) {
+        white = new PlayerDisplay(currentGame, true);
+        black = new PlayerDisplay(currentGame, false);
+
+        playerContainer.setLayout(new BoxLayout(playerContainer, BoxLayout.Y_AXIS));
+        playerContainer.add(white);
+        playerContainer.add(black);
+        playerContainer.setVisible(true);
+        boardAndPlayers.add(playerContainer);
     }
 
     private void setLogo(JFrame frame) {
@@ -103,10 +122,70 @@ public class VisualConsole extends JFrame implements ActionListener {
         return bi;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().equals("myButton")) {
-//            label.setText(field.getText());
-//        }
+        if (e.getActionCommand().equals("Save")) {
+            saveGame();
+            System.out.println("Saved game");
+        } else if (e.getActionCommand().equals("Load")) {
+            loadGame();
+            System.out.println("New game loaded");
+        } else if (e.getActionCommand().equals("New")) {
+            currentGame = new ChessGame("White", "Black");
+            System.out.println("Created a new game");
+        } else if (e.getActionCommand().equals("Select")) {
+            System.out.println("CHESS SQUARE CLICKED");
+            handleSelects(e);
+            chessBoard.visualizeBoard();
+        }
+    }
+
+    //EFFECTS: handles selects on the chessboard, moving/capturing pieces if needed
+    private void handleSelects(ActionEvent e) {
+        JButton jb = (JButton) e.getSource();
+        int x = jb.getLocation().x;
+        int y = jb.getLocation().y;
+        Translator t = new Translator();
+        String selectSquare = t.translateToChessCoord(x, y);
+        if (firstSelect == null) {
+            firstSelect = selectSquare;
+        } else {
+            int xx = t.translateToXCoord(firstSelect);
+            int yy = t.translateToYCoord(firstSelect);
+            secondSelect = selectSquare;
+            if (!(currentGame.returnPieceOn(x, y) == null) && !(currentGame.returnPieceOn(xx, yy) == null)) {
+                currentGame.returnPieceOn(xx, yy).captures(currentGame.getActive(), x, y);
+            } else if (!(currentGame.returnPieceOn(xx, yy) == null)) {
+                currentGame.returnPieceOn(xx, yy).move(currentGame.getActive(), x, y);
+            } else {
+                //do nothing
+            }
+            firstSelect = null;
+            secondSelect = null;
+        }
+    }
+
+    //REQUIRES: there is a folder in DEFAULT_FILE fitting requirements of JsonReader class
+    //EFFECTS: loads the last game to be played on this computer
+    private void loadGame() {
+        JsonReader reader = new JsonReader(DEFAULT_FILE);
+        try {
+            currentGame = reader.read();
+        } catch (IOException ioe) {
+            // do nothing for now
+        }
+    }
+
+    //EFFECTS: saves the current game to DEFAULT_FILE
+    private void saveGame() {
+        JsonWriter writer = new JsonWriter(DEFAULT_FILE);
+        try {
+            writer.open();
+            writer.write(currentGame);
+            writer.close();
+        } catch (IOException ioe) {
+            // do nothing for now
+        }
     }
 
     public static void main(String[] args) {

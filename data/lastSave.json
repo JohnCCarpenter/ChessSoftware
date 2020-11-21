@@ -1,12 +1,7 @@
 {
-    "Is White's Turn": false,
+    "Is White's Turn": true,
     "White Player": {
-        "Captured Enemy Pieces": [{
-            "Piece Location": "d5",
-            "Is Captured": true,
-            "Piece Type": "P",
-            "Has Moved": false
-        }],
+        "Captured Enemy Pieces": [],
         "Owned Active Pieces": [
             {
                 "Piece Location": "a2",
@@ -33,7 +28,7 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "d5",
+                "Piece Location": "e2",
                 "Is Captured": false,
                 "Piece Type": "P",
                 "Has Moved": false
@@ -75,7 +70,7 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "f3",
+                "Piece Location": "g1",
                 "Is Captured": false,
                 "Piece Type": "N",
                 "Has Moved": false
@@ -105,7 +100,7 @@
                 "Has Moved": false
             }
         ],
-        "Name": "john",
+        "Name": "John",
         "Is Playing White": true
     },
     "En Passent Square": "-",
@@ -131,7 +126,13 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "e5",
+                "Piece Location": "d7",
+                "Is Captured": false,
+                "Piece Type": "P",
+                "Has Moved": false
+            },
+            {
+                "Piece Location": "e7",
                 "Is Captured": false,
                 "Piece Type": "P",
                 "Has Moved": false
@@ -203,7 +204,7 @@
                 "Has Moved": false
             }
         ],
-        "Name": "joan",
+        "Name": "Michelle",
         "Is Playing White": false
     }
 }
