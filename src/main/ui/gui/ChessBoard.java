@@ -83,10 +83,11 @@ public class ChessBoard extends JPanel {
 
     //EFFECTS: creates a button
     private JButton makeButton(Insets buttonMargin, int ii, int jj) {
-        JButton b = new JButton();
+        ChessSquare b = new ChessSquare();
         b.setMargin(buttonMargin);
         b.addActionListener(buttonListener);
-        b.setLocation(ii, jj);
+        b.addGridPosition(ii, jj);
+        b.setCg(game);
         b.setActionCommand("Select");
         return b;
     }

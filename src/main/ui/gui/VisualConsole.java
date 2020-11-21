@@ -142,27 +142,46 @@ public class VisualConsole extends JFrame implements ActionListener {
 
     //EFFECTS: handles selects on the chessboard, moving/capturing pieces if needed
     private void handleSelects(ActionEvent e) {
-        JButton jb = (JButton) e.getSource();
-        int x = jb.getLocation().x;
-        int y = jb.getLocation().y;
+        ChessSquare jb = (ChessSquare) e.getSource();
+        int x = jb.getPosX();
+        int y = jb.getPosY();
+        currentGame = jb.getCg();
         Translator t = new Translator();
         String selectSquare = t.translateToChessCoord(x, y);
         if (firstSelect == null) {
             firstSelect = selectSquare;
+            System.out.println(selectSquare);
         } else {
-            int xx = t.translateToXCoord(firstSelect);
-            int yy = t.translateToYCoord(firstSelect);
-            secondSelect = selectSquare;
-            if (!(currentGame.returnPieceOn(x, y) == null) && !(currentGame.returnPieceOn(xx, yy) == null)) {
-                currentGame.returnPieceOn(xx, yy).captures(currentGame.getActive(), x, y);
-            } else if (!(currentGame.returnPieceOn(xx, yy) == null)) {
-                currentGame.returnPieceOn(xx, yy).move(currentGame.getActive(), x, y);
-            } else {
-                //do nothing
-            }
-            firstSelect = null;
-            secondSelect = null;
+            secondClickActions(x, y, t, selectSquare);
         }
+    }
+
+    //EFFECTS: does all the actions that would occur given a second click on the board
+    private void secondClickActions(int x, int y, Translator t, String selectSquare) {
+        System.out.println(selectSquare);
+        int xx = t.translateToXCoord(firstSelect);
+        int yy = t.translateToYCoord(firstSelect);
+        secondSelect = selectSquare;
+        if (!(currentGame.returnPieceOn(x, y) == null) && !(currentGame.returnPieceOn(xx, yy) == null)) {
+            if (currentGame.returnPieceOn(xx, yy).captures(currentGame.getActive(), x, y)) {
+                currentGame.setIsWhiteTurn(!currentGame.getIsWhiteTurn());
+                System.out.println("captures");
+            } else {
+                System.out.println("nothing");
+            }
+        } else if (!(currentGame.returnPieceOn(xx, yy) == null)) {
+            if (currentGame.returnPieceOn(xx, yy).move(currentGame.getActive(), x, y)) {
+                currentGame.setIsWhiteTurn(!currentGame.getIsWhiteTurn());
+                System.out.println("moved");
+            } else {
+                System.out.println("nothing");
+            }
+        } else {
+            //do nothing
+            System.out.println("nothing");
+        }
+        firstSelect = null;
+        secondSelect = null;
     }
 
     //REQUIRES: there is a folder in DEFAULT_FILE fitting requirements of JsonReader class
