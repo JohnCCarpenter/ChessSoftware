@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -175,6 +176,65 @@ public abstract class ChessPiece implements Writable {
             symbol = symbol.toLowerCase();
         }
         return symbol;
+    }
+
+    //EFFECTS: Returns a JLabel object of the given chess piece
+    public ImageIcon image() {
+        JLabel sprite = new JLabel();
+        ImageIcon picture;
+
+        if (getOwner().isPlayingWhite()) {
+            picture = getImageIconWhite();
+        } else {
+            picture = getImageIconBlack();
+        }
+
+        sprite.setIcon(picture);
+        return picture;
+    }
+
+    //EFFECTS: returns this pieces Image icon if they are black
+    private ImageIcon getImageIconWhite() {
+        ImageIcon picture;
+        switch (symbol()) {
+            case "P" : picture = new ImageIcon("./data/WhitePawn.png");
+                break;
+            case "B" : picture = new ImageIcon("./data/WhiteBishop.png");
+                break;
+            case "N" : picture = new ImageIcon("./data/WhiteKnight.png");
+                break;
+            case "R" : picture = new ImageIcon("./data/WhiteRook.png");
+                break;
+            case "Q" : picture = new ImageIcon("./data/WhiteQueen.png");
+                break;
+            case "K" : picture = new ImageIcon("./data/WhiteKing.png");
+                break;
+            default : picture = new ImageIcon();
+                break;
+        }
+        return picture;
+    }
+
+    //EFFECTS: returns this pieces Image icon if they are black
+    private ImageIcon getImageIconBlack() {
+        ImageIcon picture;
+        switch (symbol()) {
+            case "p" : picture = new ImageIcon("./data/BlackPawn.png");
+                break;
+            case "b" : picture = new ImageIcon("./data/BlackBishop.png");
+                break;
+            case "n" : picture = new ImageIcon("./data/BlackKnight.png");
+                break;
+            case "r" : picture = new ImageIcon("./data/BlackRook.png");
+                break;
+            case "q" : picture = new ImageIcon("./data/BlackQueen.png");
+                break;
+            case "k" : picture = new ImageIcon("./data/BlackKing.png");
+                break;
+            default : picture = new ImageIcon();
+                break;
+        }
+        return picture;
     }
 
     //taken and adjusted from JsonSerializationDemo

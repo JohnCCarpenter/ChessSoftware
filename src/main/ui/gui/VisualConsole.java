@@ -23,6 +23,8 @@ public class VisualConsole extends JFrame implements ActionListener {
     //the User display portion of the frame, one for white player and one for black player
     private JPanel white;
     private JPanel black;
+    JPanel boardAndPlayers;
+    JPanel saveStateManager;
 
     //the chessboard part of the application where you will be interacting with the pieces
     private ChessBoard chessBoard;
@@ -35,16 +37,19 @@ public class VisualConsole extends JFrame implements ActionListener {
 
 
     public VisualConsole() {
-        //Initialize overall frame and game to be displayed
-        JFrame frame = new JFrame("Chess");
+        super("chess");
+        build();
+    }
+
+    //EFFECTS: Initialize overall frame and game to be displayed
+    private void build() {
         currentGame = new ChessGame("John", "Michelle");
         JPanel container = new JPanel();
         JPanel playerContainer = new JPanel();
 
         //Initialize two subgroups and how they will be laid out
-        JPanel boardAndPlayers = new JPanel();
-        JPanel saveStateManager = new JPanel();
-
+        boardAndPlayers = new JPanel();
+        saveStateManager = new JPanel();
 
 
         //add chess board and players to boardandplayers
@@ -59,21 +64,21 @@ public class VisualConsole extends JFrame implements ActionListener {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(boardAndPlayers);
         container.add(saveStateManager);
-        frame.add(container);
+        add(container);
 
 
         //SET SIZE AND POSITION
-        frame.setSize(500, 500);
-        frame.setResizable(false);
-        frame.setLocation(CENTRE_SCREEN);
+        setSize(500, 500);
+        setResizable(false);
+        setLocation(CENTRE_SCREEN);
 
         //UPDATE LOGO IN TOP LEFT
-        setLogo(frame);
+        setLogo(this);
 
         //BASIC REQUIREMENTS
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
     }
 
     //EFFECTS: //Initialize save and load and new buttons and add them to saveStateManager
@@ -136,8 +141,13 @@ public class VisualConsole extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("Select")) {
             System.out.println("CHESS SQUARE CLICKED");
             handleSelects(e);
-            chessBoard.visualizeBoard();
         }
+
+        ///NEED TO FIGURE OUT HOW TO REPAINT ON ACTIONS
+        System.out.println(chessBoard.getGame().equals(currentGame));
+        chessBoard.setGame(currentGame);
+        repaint();
+        revalidate();
     }
 
     //EFFECTS: handles selects on the chessboard, moving/capturing pieces if needed
@@ -163,14 +173,16 @@ public class VisualConsole extends JFrame implements ActionListener {
         int yy = t.translateToYCoord(firstSelect);
         secondSelect = selectSquare;
         if (!(currentGame.returnPieceOn(x, y) == null) && !(currentGame.returnPieceOn(xx, yy) == null)) {
-            if (currentGame.returnPieceOn(xx, yy).captures(currentGame.getActive(), x, y)) {
+            if (currentGame.getIsWhiteTurn() == currentGame.returnPieceOn(xx, yy).getOwner().isPlayingWhite()
+                    && currentGame.returnPieceOn(xx, yy).captures(currentGame.getActive(), x, y)) {
                 currentGame.setIsWhiteTurn(!currentGame.getIsWhiteTurn());
                 System.out.println("captures");
             } else {
                 System.out.println("nothing");
             }
         } else if (!(currentGame.returnPieceOn(xx, yy) == null)) {
-            if (currentGame.returnPieceOn(xx, yy).move(currentGame.getActive(), x, y)) {
+            if (currentGame.returnPieceOn(xx, yy).move(currentGame.getActive(), x, y)
+                    && currentGame.getIsWhiteTurn() == currentGame.returnPieceOn(x, y).getOwner().isPlayingWhite()) {
                 currentGame.setIsWhiteTurn(!currentGame.getIsWhiteTurn());
                 System.out.println("moved");
             } else {

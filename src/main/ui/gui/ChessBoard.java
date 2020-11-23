@@ -26,11 +26,6 @@ public class ChessBoard extends JPanel {
     int currentIndexX;
     int currentIndexY;
 
-    BufferedImage white = new BufferedImage(100, 100, 1);
-    Graphics2D graphics = white.createGraphics();
-    BufferedImage black = new BufferedImage(100, 100, 1);
-    Graphics2D otherGraphics = black.createGraphics();
-
     //EFFECTS: creates a chessboard with a given chess game on it
     public ChessBoard(ChessGame cg, VisualConsole vc) {
 
@@ -47,8 +42,6 @@ public class ChessBoard extends JPanel {
     // https://stackoverflow.com/questions/21077322/create-a-chess-board-with-jpanel
     //EFFECTS: Creates a new JPanel overlay with all the active pieces in the right spots
     public void visualizeBoard() {
-        ImageIcon piece = new ImageIcon("./data/BlackPawn.png");
-
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int ii = 0; ii < chessBoardSquares.length; ii++) {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
@@ -56,17 +49,11 @@ public class ChessBoard extends JPanel {
                 currentIndexY = jj;
                 JButton b = makeButton(buttonMargin, ii, jj);
 
-                // our chess pieces are 64x64 px in size, so we'll
-                // 'fill this in' using a transparent icon..
-                Image pieceImage = choosePieceImageOnSquare(ii, jj);
-
-                ImageIcon icon = new ImageIcon(
-                        new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
-                Graphics g = icon.getImage().getGraphics();
-
-                drawImage(pieceImage, g);
-
-                b.setIcon(icon);
+                if (!(game.returnPieceOn(ii, jj) == null)) {
+                    Image i = getScaledImage(game.returnPieceOn(ii, jj).image().getImage(), 85, 88);
+                    ImageIcon pieceIcon = new ImageIcon(i);
+                    b.setIcon(pieceIcon);
+                }
 
                 setBackGroundColour(ii, jj, b);
                 chessBoardSquares[jj][ii] = b;
@@ -79,6 +66,22 @@ public class ChessBoard extends JPanel {
                 this.add(chessBoardSquares[ii][jj]);
             }
         }
+
+        buttonListener.repaint();
+    }
+
+    //Taken from stackoverflow user suken shah
+    //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
+    //EFFECTS: returns a scaled version of the given Image
+    private Image getScaledImage(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
     }
 
     //EFFECTS: creates a button
@@ -92,40 +95,54 @@ public class ChessBoard extends JPanel {
         return b;
     }
 
-    //EFFECTS: draws an image to the drawer
-    private void drawImage(Image pieceImage, Graphics g) {
-        if (!(pieceImage == null)) {
-            g.drawImage(pieceImage, 0, 0, 64, 64, 0, 0,
-                    pieceImage.getWidth(null), pieceImage.getHeight(null), null);
-        }
-    }
-
     //EFFECTS: sets the background colour of the square ii jj
     private void setBackGroundColour(int ii, int jj, JButton b) {
         if (!(((ii + jj) % 2) == 1)) {
-            b.setBackground(Color.LIGHT_GRAY);
+            b.setBackground(Color.WHITE);
         } else if (((ii + jj) % 2) == 1) {
             b.setBackground(Color.DARK_GRAY);
         }
     }
 
-    //EFFECTS: returns the image of the piece on the square, if null means nothing on
-    private BufferedImage choosePieceImageOnSquare(int ii, int jj) {
-        ChessPiece cp = game.returnPieceOn(ii, jj);
-        if (cp == null) {
-            return null;
-        } else {
-            try {
-                return ImageIO.read(new File("./data/BlackPawn.png"));
-            } catch (IOException ioe) {
-                return null;
-            }
+    //GETTERS AND SETTERS
 
-//            if (cp.symbol().equals("P")) {
-//                //incomplete
-//            }
-        }
+    public ChessGame getGame() {
+        return game;
+    }
 
+    public void setGame(ChessGame game) {
+        this.game = game;
+    }
 
+    public JButton[][] getChessBoardSquares() {
+        return chessBoardSquares;
+    }
+
+    public void setChessBoardSquares(JButton[][] chessBoardSquares) {
+        this.chessBoardSquares = chessBoardSquares;
+    }
+
+    public VisualConsole getButtonListener() {
+        return buttonListener;
+    }
+
+    public void setButtonListener(VisualConsole buttonListener) {
+        this.buttonListener = buttonListener;
+    }
+
+    public int getCurrentIndexX() {
+        return currentIndexX;
+    }
+
+    public void setCurrentIndexX(int currentIndexX) {
+        this.currentIndexX = currentIndexX;
+    }
+
+    public int getCurrentIndexY() {
+        return currentIndexY;
+    }
+
+    public void setCurrentIndexY(int currentIndexY) {
+        this.currentIndexY = currentIndexY;
     }
 }
