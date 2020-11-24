@@ -31,11 +31,17 @@ public class ChessBoard extends JPanel {
 
         buttonListener = vc;
         game = cg;
-        this.setPreferredSize(new Dimension(BOARD_SIZE));
-        this.setLayout(boardLayout);
+        setPreferredSize(new Dimension(BOARD_SIZE));
+        setLayout(boardLayout);
         visualizeBoard();
-        this.setVisible(true);
+        setVisible(true);
 
+    }
+
+    //EFFECTS: paints the components of this Chessboard to the correct places
+    @Override
+    public void paintComponents(Graphics g) {
+        super.paintComponent(g);
     }
 
     // Code for board visualization was adjusted from user Andrew Thompson's post on stack overflow
@@ -60,14 +66,12 @@ public class ChessBoard extends JPanel {
             }
         }
 
-        //fills the the chessboard from top left right then down
+        //fills the the chessboard from bottom left right then up
         for (int ii = 0; ii < 8; ii++) {
             for (int jj = 0; jj < 8; jj++) {
-                this.add(chessBoardSquares[ii][jj]);
+                this.add(chessBoardSquares[7 - ii][jj]);
             }
         }
-
-        buttonListener.repaint();
     }
 
     //Taken from stackoverflow user suken shah
@@ -85,7 +89,7 @@ public class ChessBoard extends JPanel {
     }
 
     //EFFECTS: creates a button
-    private JButton makeButton(Insets buttonMargin, int ii, int jj) {
+    public JButton makeButton(Insets buttonMargin, int ii, int jj) {
         ChessSquare b = new ChessSquare();
         b.setMargin(buttonMargin);
         b.addActionListener(buttonListener);
@@ -95,17 +99,7 @@ public class ChessBoard extends JPanel {
         return b;
     }
 
-    //EFFECTS: sets the background colour of the square ii jj
-    private void setBackGroundColour(int ii, int jj, JButton b) {
-        if (!(((ii + jj) % 2) == 1)) {
-            b.setBackground(Color.WHITE);
-        } else if (((ii + jj) % 2) == 1) {
-            b.setBackground(Color.DARK_GRAY);
-        }
-    }
-
     //GETTERS AND SETTERS
-
     public ChessGame getGame() {
         return game;
     }
@@ -145,4 +139,16 @@ public class ChessBoard extends JPanel {
     public void setCurrentIndexY(int currentIndexY) {
         this.currentIndexY = currentIndexY;
     }
+
+    //EFFECTS: sets the background colour of the square ii jj
+    private void setBackGroundColour(int ii, int jj, JButton b) {
+        if (!(((ii + jj) % 2) == 1)) {
+            b.setBackground(Color.WHITE);
+        } else if (((ii + jj) % 2) == 1) {
+            b.setBackground(Color.DARK_GRAY);
+        }
+    }
+
+    //GETTERS AND SETTERS
+
 }

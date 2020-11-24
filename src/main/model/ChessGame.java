@@ -2,7 +2,6 @@ package model;
 
 import exceptions.BadSelectException;
 import exceptions.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 

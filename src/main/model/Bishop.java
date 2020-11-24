@@ -40,6 +40,8 @@ public class Bishop extends ChessPiece {
     public Boolean isLegalCapture(ArrayList<ChessPiece> active, int x, int y) {
         if (abs(x - this.getPosX()) != abs(y - this.getPosY())) {
             return false;
+        } else if (((x - getPosX()) == 0) || ((y - getPosY()) == 0)) {
+            return false;
         } else if (checkPath(active, x, y)) {
             return false;
         } else if (!(checkIsOccupied(active, x, y))) {

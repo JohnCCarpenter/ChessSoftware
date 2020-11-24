@@ -1,7 +1,56 @@
 {
     "Is White's Turn": true,
     "White Player": {
-        "Captured Enemy Pieces": [],
+        "Captured Enemy Pieces": [
+            {
+                "Piece Location": "c6",
+                "Is Captured": true,
+                "Piece Type": "N",
+                "Has Moved": true
+            },
+            {
+                "Piece Location": "e8",
+                "Is Captured": true,
+                "Piece Type": "K",
+                "Has Moved": false
+            },
+            {
+                "Piece Location": "e5",
+                "Is Captured": true,
+                "Piece Type": "P",
+                "Has Moved": true
+            },
+            {
+                "Piece Location": "f8",
+                "Is Captured": true,
+                "Piece Type": "B",
+                "Has Moved": false
+            },
+            {
+                "Piece Location": "g8",
+                "Is Captured": true,
+                "Piece Type": "N",
+                "Has Moved": false
+            },
+            {
+                "Piece Location": "h8",
+                "Is Captured": true,
+                "Piece Type": "R",
+                "Has Moved": false
+            },
+            {
+                "Piece Location": "h5",
+                "Is Captured": true,
+                "Piece Type": "P",
+                "Has Moved": true
+            },
+            {
+                "Piece Location": "g5",
+                "Is Captured": true,
+                "Piece Type": "P",
+                "Has Moved": true
+            }
+        ],
         "Owned Active Pieces": [
             {
                 "Piece Location": "a2",
@@ -28,10 +77,10 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "e2",
+                "Piece Location": "e4",
                 "Is Captured": false,
                 "Piece Type": "P",
-                "Has Moved": false
+                "Has Moved": true
             },
             {
                 "Piece Location": "f2",
@@ -70,34 +119,16 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "g1",
-                "Is Captured": false,
-                "Piece Type": "N",
-                "Has Moved": false
-            },
-            {
                 "Piece Location": "c1",
                 "Is Captured": false,
                 "Piece Type": "B",
                 "Has Moved": false
             },
             {
-                "Piece Location": "f1",
-                "Is Captured": false,
-                "Piece Type": "B",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "d1",
-                "Is Captured": false,
-                "Piece Type": "Q",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "e1",
+                "Piece Location": "g5",
                 "Is Captured": false,
                 "Piece Type": "K",
-                "Has Moved": false
+                "Has Moved": true
             }
         ],
         "Name": "John",
@@ -105,13 +136,32 @@
     },
     "En Passent Square": "-",
     "Black Player": {
-        "Captured Enemy Pieces": [],
+        "Captured Enemy Pieces": [
+            {
+                "Piece Location": "e8",
+                "Is Captured": true,
+                "Piece Type": "B",
+                "Has Moved": true
+            },
+            {
+                "Piece Location": "e5",
+                "Is Captured": true,
+                "Piece Type": "N",
+                "Has Moved": true
+            },
+            {
+                "Piece Location": "b5",
+                "Is Captured": true,
+                "Piece Type": "Q",
+                "Has Moved": true
+            }
+        ],
         "Owned Active Pieces": [
             {
-                "Piece Location": "a7",
+                "Piece Location": "b5",
                 "Is Captured": false,
                 "Piece Type": "P",
-                "Has Moved": false
+                "Has Moved": true
             },
             {
                 "Piece Location": "b7",
@@ -126,57 +176,21 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "d7",
+                "Piece Location": "d6",
                 "Is Captured": false,
                 "Piece Type": "P",
-                "Has Moved": false
+                "Has Moved": true
             },
             {
-                "Piece Location": "e7",
+                "Piece Location": "f6",
                 "Is Captured": false,
                 "Piece Type": "P",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "f7",
-                "Is Captured": false,
-                "Piece Type": "P",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "g7",
-                "Is Captured": false,
-                "Piece Type": "P",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "h7",
-                "Is Captured": false,
-                "Piece Type": "P",
-                "Has Moved": false
+                "Has Moved": true
             },
             {
                 "Piece Location": "a8",
                 "Is Captured": false,
                 "Piece Type": "R",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "h8",
-                "Is Captured": false,
-                "Piece Type": "R",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "b8",
-                "Is Captured": false,
-                "Piece Type": "N",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "g8",
-                "Is Captured": false,
-                "Piece Type": "N",
                 "Has Moved": false
             },
             {
@@ -186,22 +200,10 @@
                 "Has Moved": false
             },
             {
-                "Piece Location": "f8",
-                "Is Captured": false,
-                "Piece Type": "B",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "d8",
+                "Piece Location": "g4",
                 "Is Captured": false,
                 "Piece Type": "Q",
-                "Has Moved": false
-            },
-            {
-                "Piece Location": "e8",
-                "Is Captured": false,
-                "Piece Type": "K",
-                "Has Moved": false
+                "Has Moved": true
             }
         ],
         "Name": "Michelle",

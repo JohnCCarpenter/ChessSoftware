@@ -14,35 +14,63 @@ import static ui.gui.VisualConsole.BOARD_SIZE;
 public class PlayerDisplay extends JPanel {
     ChessGame currentGame;
     JLabel player;
+    JPanel captures;
+    JLabel points;
 
     public PlayerDisplay(ChessGame game, boolean whitePlayer) {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        setAlignmentY(Component.TOP_ALIGNMENT);
 
         generateComponents(game, whitePlayer);
+
+        setVisible(true);
+    }
+
+    //EFFECTS: generates and adds the components of this PlayerDisplay to it
+    public void generateComponents(ChessGame game, boolean whitePlayer) {
+        playerSpecifics(game, whitePlayer);
+        points = pointDisplay(game, whitePlayer);
+        alignComponents();
+
+        add(player);
+        add(points);
+        add(captures);
+
+        Dimension squareDim = new Dimension(BOARD_SIZE.width / 2, BOARD_SIZE.height / 2);
+        setPreferredSize(squareDim);
+        setMinimumSize(squareDim);
+        setMaximumSize(squareDim);
+    }
+
+    //EFFECTS: Generates those elements of the player display that are specific to being white/black
+    private void playerSpecifics(ChessGame game, boolean whitePlayer) {
         if (whitePlayer) {
             player = new JLabel(game.getWhitePlayer().getName());
-            player.setFont(new Font("Times New Roman", Font.BOLD, 48));
+            player.setFont(new Font("Times New Roman", Font.BOLD, 45));
             player.setForeground(Color.BLACK);
+            captures = visualizeCaptures(game.getWhitePlayer().getCaptured());
+            captures.setBackground(Color.WHITE);
             setBackground(Color.WHITE);
         } else {
             player = new JLabel(game.getBlackPlayer().getName());
-            player.setFont(new Font("Times New Roman", Font.BOLD, 48));
+            player.setFont(new Font("Times New Roman", Font.BOLD, 45));
             player.setForeground(Color.WHITE);
+            captures = visualizeCaptures(game.getBlackPlayer().getCaptured());
+            captures.setBackground(Color.BLACK);
             setBackground(Color.BLACK);
         }
-
-        this.add(player);
-        Dimension squareDim = new Dimension(BOARD_SIZE.width / 2, BOARD_SIZE.height / 2);
-        this.setPreferredSize(squareDim);
-        this.setVisible(true);
     }
 
-    private void generateComponents(ChessGame game, boolean whitePlayer) {
-        add(visualizeCaptures(game.getWhitePlayer().getCaptured()), whitePlayer);
-        add(pointDisplay(game, whitePlayer));
+    //EFFECTS: aligns the components in this frame
+    private void alignComponents() {
+        player.setAlignmentX(Component.CENTER_ALIGNMENT);
+        captures.setAlignmentX(Component.CENTER_ALIGNMENT);
+        points.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     //EFFECTS: returns the component that shows how many points up the player is (or show nothing if they are down)
-    private Component pointDisplay(ChessGame game, boolean whitePlayer) {
+    private JLabel pointDisplay(ChessGame game, boolean whitePlayer) {
         int pointsUp = pointsUp(game, whitePlayer);
         JLabel display = new JLabel();
         if (pointsUp > 0) {
@@ -51,9 +79,9 @@ public class PlayerDisplay extends JPanel {
         }
         display.setFont(new Font("Times New Roman", Font.BOLD, 24));
         if (whitePlayer) {
-            display.setForeground(Color.WHITE);
-        } else {
             display.setForeground(Color.BLACK);
+        } else {
+            display.setForeground(Color.WHITE);
         }
         return display;
     }
@@ -83,12 +111,12 @@ public class PlayerDisplay extends JPanel {
     private JPanel visualizeCaptures(ArrayList<ChessPiece> captured) {
         JPanel captureDisplay = new JPanel();
         for (ChessPiece p : captured) {
-            Image image = p.image().getImage();
+            Image image = getScaledImage(p.image().getImage(), 40, 40);
             ImageIcon icon = new ImageIcon(image);
+            //need to set background to transparent!!!
             captureDisplay.add(new JLabel(icon));
         }
-
-        return captureDisplay; //stub
+        return captureDisplay;
     }
 
     //Taken from stackoverflow user suken shah

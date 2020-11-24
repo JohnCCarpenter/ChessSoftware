@@ -124,4 +124,11 @@ public class User implements Writable {
         return possibleMoves;
     }
 
+    public ChessGame getCurrentGame() {
+        return currentGame;
+    }
+
+    public void setCurrentGame(ChessGame currentGame) {
+        this.currentGame = currentGame;
+    }
 }
