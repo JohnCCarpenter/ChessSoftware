@@ -47,7 +47,7 @@ In the context of a chessboard application, as a user, I want to be able to:
  
  - ~~control the pieces in the game through a graphical user interface~~
  
-##Phase 4: Task 2
+## Phase 4: Task 2
 Due to the complex nature of this application I have already implemented multiple of the Java language constructs into
 my project. I have methods that throw exceptions when strange behaviour is presented and this functionality is tested 
 (the IllegalCaptureException and IllegalMovementException heavily used in the movement of ChessPieces for example). I
@@ -58,7 +58,7 @@ and the ChessGame class to allow for ChessPieces to check the state of the game 
 , Castling, and Check restrictions can be enforced. There are also a huge number of instances where a class needs to 
 call a method from another class.
 
-##Phase 4: Task 3
+## Phase 4: Task 3
 If you look at the class diagram you may notice that there is a high degree of coupling between the ChessGame,
 ChessPiece, and User classes that could be fixed with some refactoring. This would be to remove the connection between 
 ChessGame and ChessPiece and simply access that information through the User who owns the pieces. Additionally, instead
