@@ -55,7 +55,17 @@ have implemented a subclass type hierarchy to represent the individual types of 
 and properties while keeping the majority of their functionality general. This accounts for 6 subclasses each with 
 distinct functionality by overriding and adding methods. I also have a bi directional association between the user class
 and the ChessGame class to allow for ChessPieces to check the state of the game so that movement options like En Passent
-Castling and Check restrictions can be enforced. There are also a huge number of instances where a class needs to call 
-a method from another class.
+, Castling, and Check restrictions can be enforced. There are also a huge number of instances where a class needs to 
+call a method from another class.
 
-
+##Phase 4: Task 3
+If you look at the class diagram you may notice that there is a high degree of coupling between the ChessGame,
+ChessPiece, and User classes that could be fixed with some refactoring. This would be to remove the connection between 
+ChessGame and ChessPiece and simply access that information through the User who owns the pieces. Additionally, instead
+of having Visual Console and ChessBoard have info about their shared current ChessGame, I could just store that info in
+the VisualConsole and access it for the ChessBoard through its connection there. 
+Other than those adjustments the coupling is quite reasonable considering the complexity of the program.
+Overall I am quite happy with the cohesion in my classes, all the actions related to chess pieces are in the Chess Piece
+folder and it is similar for all the classes in my model class. In my gui section there are some adjustments I would 
+make though, including creating tools to deal with images (for example I have a common method in two of the classes that
+just scales an image). 
