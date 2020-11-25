@@ -29,11 +29,6 @@ class JsonReaderTest {
         wkd4 = new King(3, 3, owner);
         wqa1 = new Queen(0, 0, owner);
 
-        owner.getOwned().add(wkd4);
-        owner.getOwned().add(wqa1);
-        enemyOwner.getOwned().add(bpe4);
-        enemyOwner.getOwned().add(bba8);
-
         customGame = new ChessGame(owner, enemyOwner,"e3", false);
         baseGame = new ChessGame("Boring", "Yuckers");
     }
@@ -65,6 +60,15 @@ class JsonReaderTest {
     void testReaderCustomChessGame() {
         JsonReader reader = new JsonReader("./data/testReaderCustomChessGame.json");
         try {
+            enemyOwner.getCaptured().add(wqa1);
+            owner.getOwned().remove(wqa1);
+            wqa1.setCaptured(true);
+            owner.getCaptured().add(bpe4);
+            enemyOwner.getOwned().remove(bpe4);
+            customGame.getActive().remove(bpe4);
+            customGame.getActive().remove(wqa1);
+            bpe4.setCaptured(true);
+
             ChessGame testGame = reader.read();
             assertEquals(customGame, testGame);
         } catch (IOException e) {

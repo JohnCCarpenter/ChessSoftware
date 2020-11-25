@@ -33,18 +33,16 @@ public class VisualConsole extends JFrame implements ActionListener {
     private ChessGame currentGame;
 
     private String firstSelect;
-    private String secondSelect;
-    private Graphics graphics;
 
 
-    public VisualConsole() {
+    public VisualConsole(String whiteName, String blackName) {
         super("chess");
-        build();
+        build(whiteName, blackName);
     }
 
     //EFFECTS: Initialize overall frame and game to be displayed
-    private void build() {
-        currentGame = new ChessGame("John", "Michelle");
+    private void build(String whiteName, String blackName) {
+        currentGame = new ChessGame(whiteName, blackName);
         JPanel container = new JPanel();
         JPanel playerContainer = new JPanel();
 
@@ -69,7 +67,8 @@ public class VisualConsole extends JFrame implements ActionListener {
 
 
         //SET SIZE AND POSITION
-        setPreferredSize(new Dimension(new Dimension((int) (BOARD_SIZE.width * 1.75), (int) (BOARD_SIZE.height * 1.15))));
+        Dimension dim = new Dimension(new Dimension((int) (BOARD_SIZE.width * 1.75), (int) (BOARD_SIZE.height * 1.15)));
+        setPreferredSize(dim);
         setResizable(false);
         setLocation(CENTRE_SCREEN);
 
@@ -92,7 +91,7 @@ public class VisualConsole extends JFrame implements ActionListener {
             loadGame();
             System.out.println("Old game loaded");
         } else if (e.getActionCommand().equals("New")) {
-            currentGame = new ChessGame("White", "Black");
+            currentGame = new ChessGame(currentGame.getWhitePlayer().getName(), currentGame.getBlackPlayer().getName());
             chessBoard.setGame(currentGame);
             System.out.println("Created a new game");
         } else if (e.getActionCommand().equals("Select")) {
@@ -115,31 +114,27 @@ public class VisualConsole extends JFrame implements ActionListener {
         String selectSquare = t.translateToChessCoord(x, y);
         if (firstSelect == null) {
             firstSelect = selectSquare;
-            System.out.println(selectSquare);
         } else {
-            secondClickActions(x, y, t, selectSquare);
+            secondClickActions(x, y, t);
         }
     }
 
     //EFFECTS: does all the actions that would occur given a second click on the board
-    private void secondClickActions(int x, int y, Translator t, String selectSquare) {
-        System.out.println(selectSquare);
+    private void secondClickActions(int x, int y, Translator t) {
         int xx = t.translateToXCoord(firstSelect);
         int yy = t.translateToYCoord(firstSelect);
-        secondSelect = selectSquare;
         if (!(currentGame.returnPieceOn(x, y) == null) && !(currentGame.returnPieceOn(xx, yy) == null)) {
             if (currentGame.getIsWhiteTurn() == currentGame.returnPieceOn(xx, yy).getOwner().isPlayingWhite()
                     && currentGame.returnPieceOn(xx, yy).captures(currentGame.getActive(), x, y)) {
                 currentGame.setIsWhiteTurn(!currentGame.getIsWhiteTurn());
             }
         } else if (!(currentGame.returnPieceOn(xx, yy) == null)) {
-            if (currentGame.returnPieceOn(xx, yy).move(currentGame.getActive(), x, y)
-                    && currentGame.getIsWhiteTurn() == currentGame.returnPieceOn(x, y).getOwner().isPlayingWhite()) {
+            if (currentGame.getIsWhiteTurn() == currentGame.returnPieceOn(xx, yy).getOwner().isPlayingWhite()
+                    && currentGame.returnPieceOn(xx, yy).move(currentGame.getActive(), x, y)) {
                 currentGame.setIsWhiteTurn(!currentGame.getIsWhiteTurn());
             }
         }
         firstSelect = null;
-        secondSelect = null;
     }
 
     //EFFECTS: updates the visuals to match the current game
@@ -222,7 +217,11 @@ public class VisualConsole extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        new VisualConsole();
+    public String getFirstSelect() {
+        return firstSelect;
+    }
+
+    public void setFirstSelect(String firstSelect) {
+        this.firstSelect = firstSelect;
     }
 }

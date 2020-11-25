@@ -18,12 +18,12 @@ public class KingTest extends ChessPieceTest {
 
     @Test
     public void printSymbolWhiteTest() {
-        assertEquals('K', tester.symbol());
+        assertEquals("K", tester.symbol());
     }
 
     @Test
     public void printSymbolBlackTest() {
-        assertEquals('k', enemyTester.symbol());
+        assertEquals("k", enemyTester.symbol());
     }
 
     //Kings cannot be blocked since they only move 1 square, and this case falls under occupy tests

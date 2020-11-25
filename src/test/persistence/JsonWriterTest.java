@@ -34,11 +34,6 @@ class JsonWriterTest {
         wkd4 = new King(3, 3, owner);
         wqa1 = new Queen(0, 0, owner);
 
-        owner.getOwned().add(wkd4);
-        owner.getOwned().add(wqa1);
-        enemyOwner.getOwned().add(bpe4);
-        enemyOwner.getOwned().add(bba8);
-
         customGame = new ChessGame(owner, enemyOwner,"e3", false);
         baseGame = new ChessGame("Boring", "Yuckers");
     }
@@ -57,7 +52,7 @@ class JsonWriterTest {
     @Test
     void testWriterBaseChessGame() {
         try {
-            JsonWriter writer = new JsonWriter("./data/testWriterBaseChessGame.json");
+            JsonWriter writer = new JsonWriter("./data/testReaderBaseChessGame.json");
             writer.open();
             writer.write(baseGame);
             writer.close();
@@ -74,10 +69,15 @@ class JsonWriterTest {
     void testWriterGeneralChessGame() {
         try {
             enemyOwner.getCaptured().add(wqa1);
-            enemyOwner.getCaptured().add(wkd4);
+            owner.getOwned().remove(wqa1);
+            wqa1.setCaptured(true);
             owner.getCaptured().add(bpe4);
-            owner.getCaptured().add(bba8);
-            JsonWriter writer = new JsonWriter("./data/testWriterCustomChessGame.json");
+            enemyOwner.getOwned().remove(bpe4);
+            customGame.getActive().remove(bpe4);
+            customGame.getActive().remove(wqa1);
+            bpe4.setCaptured(true);
+
+            JsonWriter writer = new JsonWriter("./data/testReaderCustomChessGame.json");
             writer.open();
             writer.write(customGame);
             writer.close();

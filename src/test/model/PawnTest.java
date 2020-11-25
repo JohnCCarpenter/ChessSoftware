@@ -40,6 +40,36 @@ public class PawnTest extends ChessPieceTest {
         assertEquals("p", enemyTester.symbol());
     }
 
+    @Test
+    public void enPassentWhiteTest() {
+        User passerOwner = new User(false, "Paterson");
+        User passedOwner = new User(true, "John");
+        Pawn passee = new Pawn(5, 7, passerOwner);
+        Pawn passer = new Pawn(4, 5, passedOwner);
+        ChessGame otherGame = new ChessGame(passedOwner, passerOwner, "-", false);
+        assertTrue(passee.move(otherGame.getActive(), 5, 5));
+        assertTrue(passer.move(otherGame.getActive(), 5, 6));
+        assertTrue(otherGame.getActive().contains(passer));
+        assertFalse(otherGame.getActive().contains(passee));
+        assertEquals(passer, otherGame.returnPieceOn(5, 6));
+        assertEquals(null, otherGame.returnPieceOn(5, 5));
+    }
+
+    @Test
+    public void enPassentBlackTest() {
+        User passerOwner = new User(true, "Paterson");
+        User passedOwner = new User(false, "John");
+        Pawn passee = new Pawn(5, 2, passerOwner);
+        Pawn passer = new Pawn(4, 4, passedOwner);
+        ChessGame otherGame = new ChessGame(passedOwner, passerOwner, "-", true);
+        assertTrue(passee.move(otherGame.getActive(), 5, 4));
+        assertTrue(passer.move(otherGame.getActive(), 5, 3));
+        assertTrue(otherGame.getActive().contains(passer));
+        assertFalse(otherGame.getActive().contains(passee));
+        assertEquals(passer, otherGame.returnPieceOn(5, 3));
+        assertEquals(null, otherGame.returnPieceOn(5, 4));
+    }
+
     //NEW PAWN TESTS
         //Testing for the captures method
     @Test
@@ -108,10 +138,13 @@ public class PawnTest extends ChessPieceTest {
         assertFalse(boundTester.isLegalMove(active, aboveBoundaryYTargetPosX, aboveBoundaryYTargetPosY));
     }
 
+    //FOLLOWING TWO TESTS INCLUDE PROMOTION TESTING
     @Override
     public void isLegalMoveHighBoundYTest() {
         active.add(boundTester);
-        assertTrue(boundTester.isLegalMove(active, highBoundaryYTargetPosX, highBoundaryYTargetPosY));
+        assertTrue(boundTester.move(active, highBoundaryYTargetPosX, highBoundaryYTargetPosY));
+        assertTrue(active.contains(new Queen(highBoundaryYTargetPosX, highBoundaryYTargetPosY, owner)));
+        assertFalse(active.contains(boundTester));
     }
 
     @Override

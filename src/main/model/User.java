@@ -16,16 +16,30 @@ public class User implements Writable {
     private ChessGame currentGame;
     private ArrayList<ChessPiece> owned;
     private ArrayList<ChessPiece> captured;
-    private ArrayList<String> threatened;
-    private ArrayList<String> possibleMoves;
     //If boolean is true this owner is playing with the white pieces, if false they play with black pieces
     private boolean playingWhite;
+
+    private ArrayList<String> threatened;
+    private ArrayList<String> possibleMoves;
+
 
     public User(boolean isWhite, String name) {
         this.name = name;
         owned = new ArrayList<ChessPiece>();
         captured = new ArrayList<ChessPiece>();
         playingWhite = isWhite;
+        currentGame = null;
+
+        threatened = new ArrayList<String>();
+        possibleMoves = new ArrayList<String>();
+    }
+
+    public User(boolean isWhite, String name, ChessGame currentGame) {
+        this.name = name;
+        owned = new ArrayList<ChessPiece>();
+        captured = new ArrayList<ChessPiece>();
+        playingWhite = isWhite;
+        this.currentGame = currentGame;
 
         threatened = new ArrayList<String>();
         possibleMoves = new ArrayList<String>();

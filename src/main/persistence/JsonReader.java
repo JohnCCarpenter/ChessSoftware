@@ -48,6 +48,8 @@ public class JsonReader {
         boolean isWhiteTurn = jsonObject.getBoolean("Is White's Turn");
 
         ChessGame cg = new ChessGame(parseUser(white), parseUser(black), enPassent, isWhiteTurn);
+        cg.getWhitePlayer().setCurrentGame(cg);
+        cg.getBlackPlayer().setCurrentGame(cg);
 
         swapUserCaptures(cg);
 
@@ -67,18 +69,20 @@ public class JsonReader {
 
     //EFFECTS: adds pieces from JSONArray to a users captured pieces
     private void addPiecesToCaptured(JSONArray captures, User user) {
-        ArrayList<ChessPiece> list = new ArrayList<ChessPiece>();
         for (Object jsonObject : captures) {
             JSONObject nextPiece = (JSONObject) jsonObject;
-            user.getCaptured().add(parseChessPiece(nextPiece, user));
+            parseChessPiece(nextPiece, user);
+            //user.getCaptured().add(parseChessPiece(nextPiece, user));
         }
     }
 
     //EFFECTS: adds pieces from JSONArray to a users active pieces
     private void addPiecesToPlayer(JSONArray active, User user) {
+        user.getCaptured().clear();
         for (Object jsonObject : active) {
             JSONObject nextPiece = (JSONObject) jsonObject;
-            user.getOwned().add(parseChessPiece(nextPiece, user));
+            parseChessPiece(nextPiece, user);
+            //user.getOwned().add(parseChessPiece(nextPiece, user));
         }
     }
 

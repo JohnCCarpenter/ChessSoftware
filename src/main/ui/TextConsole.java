@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 import exceptions.*;
+import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
@@ -17,25 +18,33 @@ public class TextConsole {
     private String location;
     private String action;
     private String target;
-    private String whiteName;
-    private String blackName;
+
 
     //EFFECTS: runs the Chess Game
-    public TextConsole() {
+    public TextConsole(String whiteName, String blackName) {
         input = new Scanner(System.in);
+        System.out.println("Do you want to load last game or create new? (Type new or load)");
+        action = input.next();
+        action.toLowerCase();
+        if (action.equals("new")) {
+            thisGame = new ChessGame(whiteName, blackName);
+        } else if (action.equals("load")) {
+            JsonReader reader = new JsonReader(DEFAULT_FILE);
+            try {
+                thisGame = reader.read();
+            } catch (IOException ioe) {
+                System.out.println("Save file read unsuccessful");
+            }
+        }
 
-        System.out.println("Who is playing with the white pieces?");
-        whiteName = input.next();
-        System.out.println("Who is playing with the black pieces?");
-        blackName = input.next();
-
-        thisGame = new ChessGame(whiteName, blackName);
         runChessGame();
     }
 
     //Alternate constructor to make a ChessGame with given pieces
     //EFFECTS: runs a custom Chess Game with the active pieces given at start
     public TextConsole(ChessGame cg) {
+
+
         input = new Scanner(System.in);
         thisGame = cg;
         runChessGame();

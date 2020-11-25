@@ -3,6 +3,7 @@ package ui.gui;
 import jdk.nashorn.internal.objects.NativeString;
 import model.ChessGame;
 import model.ChessPiece;
+import model.Translator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class ChessBoard extends JPanel {
 
     private GridLayout boardLayout = new GridLayout(0, 8);
     private ChessGame game;
-    private JButton[][] chessBoardSquares = new JButton[8][8];
+    private ChessSquare[][] chessBoardSquares = new ChessSquare[8][8];
     private VisualConsole buttonListener;
     int currentIndexX;
     int currentIndexY;
@@ -53,7 +54,7 @@ public class ChessBoard extends JPanel {
             for (int jj = 0; jj < chessBoardSquares[ii].length; jj++) {
                 currentIndexX = ii;
                 currentIndexY = jj;
-                JButton b = makeButton(buttonMargin, ii, jj);
+                ChessSquare b = makeButton(buttonMargin, ii, jj);
 
                 if (!(game.returnPieceOn(ii, jj) == null)) {
                     Image i = getScaledImage(game.returnPieceOn(ii, jj).image().getImage(), 85, 88);
@@ -89,7 +90,7 @@ public class ChessBoard extends JPanel {
     }
 
     //EFFECTS: creates a button
-    public JButton makeButton(Insets buttonMargin, int ii, int jj) {
+    public ChessSquare makeButton(Insets buttonMargin, int ii, int jj) {
         ChessSquare b = new ChessSquare();
         b.setMargin(buttonMargin);
         b.addActionListener(buttonListener);
@@ -108,11 +109,11 @@ public class ChessBoard extends JPanel {
         this.game = game;
     }
 
-    public JButton[][] getChessBoardSquares() {
+    public ChessSquare[][] getChessBoardSquares() {
         return chessBoardSquares;
     }
 
-    public void setChessBoardSquares(JButton[][] chessBoardSquares) {
+    public void setChessBoardSquares(ChessSquare[][] chessBoardSquares) {
         this.chessBoardSquares = chessBoardSquares;
     }
 
@@ -142,7 +143,11 @@ public class ChessBoard extends JPanel {
 
     //EFFECTS: sets the background colour of the square ii jj
     private void setBackGroundColour(int ii, int jj, JButton b) {
-        if (!(((ii + jj) % 2) == 1)) {
+        Translator t = new Translator();
+        String selected = t.translateToChessCoord(ii, jj);
+        if (selected.equals(buttonListener.getFirstSelect())) {
+            b.setBackground(Color.RED);
+        } else if (!(((ii + jj) % 2) == 1)) {
             b.setBackground(Color.WHITE);
         } else if (((ii + jj) % 2) == 1) {
             b.setBackground(Color.DARK_GRAY);

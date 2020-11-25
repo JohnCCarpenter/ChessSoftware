@@ -17,6 +17,7 @@ public class ChessGame implements Writable {
     private User blackPlayer;
 
     private boolean isWhiteTurn;
+    //string representing enPassentable square in the board
     private String enPassent;
 
     //White pawns
@@ -59,8 +60,8 @@ public class ChessGame implements Writable {
     //Default constructor
     //EFFECTS: sets up ChessGame with standard starting pieces and locations
     public ChessGame(String whiteName, String blackName) {
-        whitePlayer = new User(true, whiteName);
-        blackPlayer = new User(false, blackName);
+        whitePlayer = new User(true, whiteName, this);
+        blackPlayer = new User(false, blackName, this);
         players = new ArrayList<>();
         activePieces = new ArrayList<>();
         players.add(whitePlayer);
@@ -71,8 +72,8 @@ public class ChessGame implements Writable {
 
         initializePawns();
         initializeOthers();
-        givePiecesToWhite();
-        givePiecesToBlack();
+        //givePiecesToWhite();
+        //givePiecesToBlack();
         setActiveList();
     }
 
@@ -81,15 +82,19 @@ public class ChessGame implements Writable {
     public ChessGame(User whitePlayer, User blackPlayer, String enPassent, Boolean isWhiteTurn) {
         this.enPassent = enPassent;
         this.isWhiteTurn = isWhiteTurn;
+
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
 
         players = new ArrayList<>();
-        players.add(whitePlayer);
-        players.add(blackPlayer);
+        players.add(this.whitePlayer);
+        players.add(this.blackPlayer);
 
         activePieces = new ArrayList<>();
         setActiveList();
+
+        whitePlayer.setCurrentGame(this);
+        blackPlayer.setCurrentGame(this);
     }
 
     //EFFECTS: updates the active list to be the owned pieces of black and white
@@ -300,9 +305,19 @@ public class ChessGame implements Writable {
         return whitePlayer;
     }
 
+    //EFFECTS: sets White Player
+    public void setWhitePlayer(User user) {
+        whitePlayer = user;
+    }
+
     //EFFECTS: returns Black Player
     public User getBlackPlayer() {
         return blackPlayer;
+    }
+
+    //EFFECTS: sets BLack Player
+    public void setBlackPlayer(User user) {
+        blackPlayer = user;
     }
 
     //EFFECTS: returns whether or not it is Whites turn currently

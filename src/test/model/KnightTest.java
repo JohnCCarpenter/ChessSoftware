@@ -19,12 +19,12 @@ public class KnightTest extends ChessPieceTest {
 
     @Test
     public void printSymbolWhiteTest() {
-        assertEquals('N', tester.symbol());
+        assertEquals("N", tester.symbol());
     }
 
     @Test
     public void printSymbolBlackTest() {
-        assertEquals('n', enemyTester.symbol());
+        assertEquals("n", enemyTester.symbol());
     }
 
     //Knights cannot be blocked so original tests do not apply

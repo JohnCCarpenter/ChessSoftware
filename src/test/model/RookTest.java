@@ -19,12 +19,12 @@ public class RookTest extends ChessPieceTest {
 
     @Test
     public void printSymbolWhiteTest() {
-        assertEquals('R', tester.symbol());
+        assertEquals("R", tester.symbol());
     }
 
     @Test
     public void printSymbolBlackTest() {
-        assertEquals('r', enemyTester.symbol());
+        assertEquals("r", enemyTester.symbol());
     }
 
     //Helpers for setup method found below

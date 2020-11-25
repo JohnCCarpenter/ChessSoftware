@@ -27,34 +27,67 @@ public class Pawn extends ChessPiece {
         value = 1;
     }
 
-    //REQUIRES: piece being captured is legally situated in chessboard (x, y within bounds [0,7])
-    //MODIFIES: this, active
-    //EFFECTS: Captures the piece at coordinates (x, y) in the list of active pieces for a chess game
-    //          returns false if there is no legal capture at pos (including movement to get to location) according
-    //          to active pieces passed in
     @Override
-    public boolean captures(ArrayList<ChessPiece> active, int x, int y) {
-        if (this.isLegalCapture(active, x, y)) {
-            Translator t = new Translator();
-            String target = t.translateToChessCoord(x, y);
-            if (enPassentable(target)) {
-                ChessPiece p;
-                if (owner.isPlayingWhite()) {
-                    p = returnPieceOn(active, x, y - 1);
-                } else {
-                    p = returnPieceOn(active, x, y + 1);
-                }
-                takePiece(active, p);
+    //MODIFIES: this
+    //EFFECTS: Changes pieces position to coordinates (x, y) on a chess board
+    //         returns true if the move is legal to play in the game according to active pieces passed in
+    //    PAWN SPECIFIC: deals with the en passent functionality since this method is called when targeting empty square
+    public boolean move(ArrayList<ChessPiece> active, int x, int y) {
+        Translator t = new Translator();
+        if (this.isLegalMove(active, x, y)) {
+            if (y - this.getPosY() == 2) {
+                owner.getCurrentGame().setEnPassent(t.translateToChessCoord(x, y - 1));
+            } else if (y - this.getPosY() == -2) {
+                owner.getCurrentGame().setEnPassent(t.translateToChessCoord(x, y + 1));
             } else {
-                ChessPiece p = returnPieceOn(active, x, y);
-                takePiece(active, p);
+                owner.getCurrentGame().setEnPassent("-");
             }
             this.setPosX(x);
             this.setPosY(y);
+
+            this.setHasMoved(true);
+            return true;
+        } else if (enPassentable(x, y, active)) {
+            takeEnPassent(active, x, y);
+            this.setPosX(x);
+            this.setPosY(y);
+            this.setHasMoved(true);
             return true;
         } else {
             return false;
         }
+    }
+
+    //REQUIRES: upgrade is one of "Rook", "Knight", "Bishop", "Queen"
+    //MODIFIES: this and newPiece
+    //EFFECTS: removes this piece from play and replaces it with a new piece of type upgrade called newPiece
+    public void promote(String upgrade) {
+        ChessPiece upgradedPiece;
+        if (upgrade == "N") {
+            upgradedPiece = new Knight(this.getPosX(), this.getPosY(), this.getOwner());
+        } else if (upgrade == "B") {
+            upgradedPiece = new Bishop(this.getPosX(), this.getPosY(), this.getOwner());
+        } else if (upgrade == "Q") {
+            upgradedPiece = new Queen(this.getPosX(), this.getPosY(), this.getOwner());
+        } else if (upgrade == "R") {
+            upgradedPiece = new Rook(this.getPosX(), this.getPosY(), this.getOwner());
+        } else {
+            upgradedPiece = null;
+        }
+        getOwner().getCurrentGame().getActive().add(upgradedPiece);
+        getOwner().getCurrentGame().getActive().remove(this);
+        getOwner().getOwned().remove(this);
+    }
+
+    //EFFECTS: handles taking the correct piece when taking en passent
+    private void takeEnPassent(ArrayList<ChessPiece> active, int x, int y) {
+        ChessPiece p;
+        if (owner.isPlayingWhite()) {
+            p = returnPieceOn(active, x, y - 1);
+        } else {
+            p = returnPieceOn(active, x, y + 1);
+        }
+        takePiece(active, p);
     }
 
     //EFFECTS: takes the piece p from active pieces and owner, gives to this pieces owner
@@ -62,6 +95,7 @@ public class Pawn extends ChessPiece {
         p.setCaptured(true);
         active.remove(p);
         p.getOwner().getOwned().remove(p);
+        owner.getCurrentGame().getActive().remove(p);
         this.getOwner().getCaptured().add(p);
     }
 
@@ -106,7 +140,7 @@ public class Pawn extends ChessPiece {
         if (!(checkIsOccupied(active, x, y))) {
             Translator t = new Translator();
             String target = t.translateToChessCoord(x, y);
-            return enPassentable(target);
+            return false;
         } else {
             ChessPiece occupier = null;
             for (ChessPiece p : active) {
@@ -119,8 +153,11 @@ public class Pawn extends ChessPiece {
     }
 
     //!!!EFFECTS: returns true if the target square is enPassentable by this pawn (is the enPassent square in the game)
-    private boolean enPassentable(String target) {
-        return false; //stub
+    private boolean enPassentable(int x, int y, ArrayList<ChessPiece> active) {
+        Translator t = new Translator();
+        String target = t.translateToChessCoord(x, y);
+        ChessPiece p = returnPieceOn(active, x, y - 1);
+        return target.equals(owner.getCurrentGame().getEnPassent());
     }
 
     //REQUIRES: movement from this position to x, y is legal if active is empty other than this

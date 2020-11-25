@@ -39,19 +39,23 @@ In the context of a chessboard application, as a user, I want to be able to:
  - ~~capture an enemy's piece with my own~~
  - ~~see where the pieces are located on the board~~
  - ~~see which pieces I have captured~~
- - learn how different pieces are allowed to move in my game
  - put my opponents king in check
  - end the game by putting my opponents king in checkmate
 
  - ~~save a game's position to continue later (after entering quit)~~
  - ~~load a previously saved game based on who was playing it~~
  
- - save a game's move order to review later
- - see my record under a particular username
+ - ~~control the pieces in the game through a graphical user interface~~
  
- - control the pieces in the game through a graphical user interface
- 
+##Phase 4: Task 2
+Due to the complex nature of this application I have already implemented multiple of the Java language constructs into
+my project. I have methods that throw exceptions when strange behaviour is presented and this functionality is tested 
+(the IllegalCaptureException and IllegalMovementException heavily used in the movement of ChessPieces for example). I
+have implemented a subclass type hierarchy to represent the individual types of ChessPieces and their unique movement
+and properties while keeping the majority of their functionality general. This accounts for 6 subclasses each with 
+distinct functionality by overriding and adding methods. I also have a bi directional association between the user class
+and the ChessGame class to allow for ChessPieces to check the state of the game so that movement options like En Passent
+Castling and Check restrictions can be enforced. There are also a huge number of instances where a class needs to call 
+a method from another class.
 
-  
-  Keeping track of captured pieces in a captures class could work
-  Which pieces a user captured
+

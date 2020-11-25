@@ -69,6 +69,7 @@ public abstract class ChessPieceTest {
     protected ArrayList<ChessPiece> active;
     protected User owner = new User(true, "White");
     protected User enemyOwner = new User(false, "Black");
+    protected ChessGame game = new ChessGame(owner, enemyOwner, "-", true);
 
     @Test
     //Test that objects get instantiated properly so initialization doesn't need to be checked within later tests

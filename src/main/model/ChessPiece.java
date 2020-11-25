@@ -27,6 +27,7 @@ public abstract class ChessPiece implements Writable {
         posX = x;
         posY = y;
         this.owner = owner;
+        owner.getOwned().add(this);
         isCaptured = false;
         hasMoved = false;
     }
@@ -38,6 +39,11 @@ public abstract class ChessPiece implements Writable {
         posX = x;
         posY = y;
         this.owner = owner;
+        if (!isCaptured) {
+            owner.getOwned().add(this);
+        } else {
+            owner.getCaptured().add(this);
+        }
         this.isCaptured = isCaptured;
         this.hasMoved = hasMoved;
     }
@@ -50,6 +56,7 @@ public abstract class ChessPiece implements Writable {
             this.setPosX(x);
             this.setPosY(y);
             this.setHasMoved(true);
+            owner.getCurrentGame().setEnPassent("-");
             return true;
         } else {
             return false;
@@ -66,10 +73,12 @@ public abstract class ChessPiece implements Writable {
             ChessPiece p = returnPieceOn(active, x, y);
             p.setCaptured(true);
             active.remove(p);
+            owner.getCurrentGame().getActive().remove(p);
             p.getOwner().getOwned().remove(p);
             this.getOwner().getCaptured().add(p);
             this.setPosX(x);
             this.setPosY(y);
+            owner.getCurrentGame().setEnPassent("-");
             return true;
         } else {
             return false;
@@ -86,25 +95,6 @@ public abstract class ChessPiece implements Writable {
         }
         return selected;
     }
-
-    /*//REQUIRES: upgrade is one of "Rook", "Knight", "Bishop", "Queen"
-    //MODIFIES: this and newPiece
-    //EFFECTS: removes this piece from play and replaces it with a new piece of type upgrade called newPiece
-    public void promote(String upgrade, ArrayList<ChessPiece> active) {
-        if (upgrade == "Knight") {
-            this.newPiece = new Knight(this.getPosX(), this.getPosY(), this.getOwner());
-        } else if (upgrade == "Bishop") {
-            this.newPiece = new Bishop(this.getPosX(), this.getPosY(), this.getOwner());
-        } else if (upgrade == "Queen") {
-            this.newPiece = new Queen(this.getPosX(), this.getPosY(), this.getOwner());
-        } else if (upgrade == "Rook") {
-            this.newPiece = new Rook(this.getPosX(), this.getPosY(), this.getOwner());
-        } else {
-            newPiece = null;
-        }
-        active.add(this.newPiece);
-        active.remove(this);
-    }*/
 
     //EFFECTS: returns true if moving to position (x, y) on board is a legal move in game with active pieces passed in
     public abstract boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y);

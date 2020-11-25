@@ -12,7 +12,6 @@ import static ui.gui.VisualConsole.BOARD_SIZE;
 
 // Displays a player in a chess game, showing their name, captured pieces, colour, and
 public class PlayerDisplay extends JPanel {
-    ChessGame currentGame;
     JLabel player;
     JPanel captures;
     JLabel points;

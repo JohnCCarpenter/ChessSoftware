@@ -54,13 +54,6 @@ public class ChessGameTest {
 
         active = new ArrayList<ChessPiece>();
 
-        owner.getOwned().add(white1);
-        owner.getOwned().add(white2);
-        owner.getOwned().add(white3);
-        enemyOwner.getOwned().add(black1);
-        enemyOwner.getOwned().add(black2);
-        enemyOwner.getOwned().add(black3);
-
         ChessGame customBoard = new ChessGame(owner, enemyOwner, "e3", false);
 
         assertEquals("e3", customBoard.getEnPassent());
