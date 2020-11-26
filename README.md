@@ -39,15 +39,17 @@ In the context of a chessboard application, as a user, I want to be able to:
  - capture an enemy's piece with my own
  - see where the pieces are located on the board
  - see which pieces I have captured
- - put my opponents king in check
- - end the game by putting my opponents king in checkmate
  - save a game's position to continue later (after entering quit)
  - load a previously saved game based on who was playing it
  - control the pieces in the game through a graphical user interface
  - see the pieces that I have captured displayed, as well as how many points up I am
  
  As of this update, the preceding user stories have been implemented. In the future I would love to include the 
- following functionality but due to the time constraints I have been unable to.
+ following functionality but due to the time constraints I have been unable to. For this reason this board functions
+ well for two experienced players but may allow some illegal moves.
+  - put a king in check
+  - end the game by putting my opponents king in checkmate
+  - castle the king 
  - See the order of moves that happened during a game (using algebraic chess notation)
  - Using the above, have an openings explorer where I could see the move orders of common openings to look through
  - Have a tactics testing option, where you are given a position and need to find the best series of moves
