@@ -4,7 +4,9 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import javax.swing.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 // ChessPiece abstract class represents a generic chess piece occupying a certain position on a chessboard
@@ -240,6 +242,22 @@ public abstract class ChessPiece implements Writable {
 
         return json;
     }
+
+//    //EFFECTS: returns the list of all threatened squares for this piece (where it could legally capture on)
+//    //         Note that this needs to be fixed by adding first friendly piece to be hit but this is start
+//    public HashSet<String> generateThreats(ArrayList<ChessPiece> active) {
+//        HashSet<String> threats = new HashSet<String>();
+//        Translator t = new Translator();
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                if (isLegalCapture(active, i, j) || isLegalMove(active, i, j)) {
+//                    String threat = t.translateToChessCoord(i, j);
+//                    threats.add(threat);
+//                }
+//            }
+//        }
+//        return threats;
+//    }
 
     @Override
     public boolean equals(Object o) {

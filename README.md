@@ -34,20 +34,25 @@ that I will need to use while designing this board.
 ## User Stories
 
 In the context of a chessboard application, as a user, I want to be able to:
- - ~~start a standard game of chess with the pieces where they are meant to be~~
- - ~~move a piece from one position to another through a console~~
- - ~~capture an enemy's piece with my own~~
- - ~~see where the pieces are located on the board~~
- - ~~see which pieces I have captured~~
+ - start a standard game of chess with the pieces where they are meant to be
+ - move a piece from one position to another through a console
+ - capture an enemy's piece with my own
+ - see where the pieces are located on the board
+ - see which pieces I have captured
  - put my opponents king in check
  - end the game by putting my opponents king in checkmate
-
- - ~~save a game's position to continue later (after entering quit)~~
- - ~~load a previously saved game based on who was playing it~~
+ - save a game's position to continue later (after entering quit)
+ - load a previously saved game based on who was playing it
+ - control the pieces in the game through a graphical user interface
+ - see the pieces that I have captured displayed, as well as how many points up I am
  
- - ~~control the pieces in the game through a graphical user interface~~
+ As of this update, the preceding user stories have been implemented. In the future I would love to include the 
+ following functionality but due to the time constraints I have been unable to.
+ - See the order of moves that happened during a game (using algebraic chess notation)
+ - Using the above, have an openings explorer where I could see the move orders of common openings to look through
+ - Have a tactics testing option, where you are given a position and need to find the best series of moves
  
-## Phase 4: Task 2
+## Phase 4: Task 2 JAVA CONSTRUCTS
 Due to the complex nature of this application I have already implemented multiple of the Java language constructs into
 my project. I have methods that throw exceptions when strange behaviour is presented and this functionality is tested 
 (the IllegalCaptureException and IllegalMovementException heavily used in the movement of ChessPieces for example). I
@@ -58,7 +63,7 @@ and the ChessGame class to allow for ChessPieces to check the state of the game 
 , Castling, and Check restrictions can be enforced. There are also a huge number of instances where a class needs to 
 call a method from another class.
 
-## Phase 4: Task 3
+## Phase 4: Task 3 REFACTORING OPTIONS
 If you look at the class diagram you may notice that there is a high degree of coupling between the ChessGame,
 ChessPiece, and User classes that could be fixed with some refactoring. This would be to remove the connection between 
 ChessGame and ChessPiece and simply access that information through the User who owns the pieces. Additionally, instead
@@ -68,4 +73,6 @@ Other than those adjustments the coupling is quite reasonable considering the co
 Overall I am quite happy with the cohesion in my classes, all the actions related to chess pieces are in the Chess Piece
 folder and it is similar for all the classes in my model class. In my gui section there are some adjustments I would 
 make though, including creating tools to deal with images (for example I have a common method in two of the classes that
-just scales an image). 
+just scales an image). I would also take out the individual wp1 wp2 etc. fields in chessgame as a simple list would be 
+sufficient and would dramatically improve readability. The same goes for the whiteplayer and blackplayer
+fields in that class.

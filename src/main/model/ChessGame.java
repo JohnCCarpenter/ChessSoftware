@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class ChessGame implements Writable {
@@ -103,6 +104,25 @@ public class ChessGame implements Writable {
         activePieces.addAll(blackPlayer.getOwned());
         activePieces.addAll(whitePlayer.getOwned());
     }
+
+//    //EFFECTS: updates the isInCheckStatus for each player
+//    public void updateChecks() {
+//        HashSet<String> whiteThreats = blackPlayer.generateThreats();
+//        HashSet<String> blackThreats = blackPlayer.generateThreats();
+//
+//        if (blackThreats.contains(whitePlayer.getKingPosition())) {
+//            whitePlayer.setInCheck(true);
+//        } else {
+//            whitePlayer.setInCheck(false);
+//        }
+//
+//        if (whiteThreats.contains(blackPlayer.getKingPosition())) {
+//            blackPlayer.setInCheck(true);
+//        } else {
+//            blackPlayer.setInCheck(false);
+//        }
+//
+//    }
 
     //EFFECTS: returns the piece on given x y coords if it belongs to the player who's turn it currently is, or null
     public ChessPiece returnFriendlyPieceOn(int pieceX, int pieceY) {

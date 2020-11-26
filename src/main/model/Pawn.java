@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static java.lang.Math.abs;
 
@@ -97,6 +98,22 @@ public class Pawn extends ChessPiece {
         p.getOwner().getOwned().remove(p);
         owner.getCurrentGame().getActive().remove(p);
         this.getOwner().getCaptured().add(p);
+    }
+
+    @Override
+    public HashSet<String> generateThreats(ArrayList<ChessPiece> active) {
+        HashSet<String> threats = new HashSet<String>();
+
+        Translator t = new Translator();
+        if (getOwner().isPlayingWhite()) {
+            threats.add(t.translateToChessCoord(posX + 1, posY + 1));
+            threats.add(t.translateToChessCoord(posX - 1, posY + 1));
+        } else {
+            threats.add(t.translateToChessCoord(posX + 1, posY - 1));
+            threats.add(t.translateToChessCoord(posX - 1, posY - 1));
+        }
+
+        return threats;
     }
 
     @Override

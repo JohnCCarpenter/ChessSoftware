@@ -22,6 +22,20 @@ public class King extends ChessPiece {
     @Override
     //NEED TO ADD FUNCTIONALITY TO NOT ALLOW MOVES ONTO THREATENED SQUARES
     public boolean isLegalMove(ArrayList<ChessPiece> active, int x, int y) {
+        Translator t = new Translator();
+        String target = t.translateToChessCoord(x, y);
+
+
+//        if (owner.isPlayingWhite()) {
+//            if (owner.getCurrentGame().getBlackPlayer().getThreatened().contains(target)) {
+//                return false;
+//            }
+//        } else {
+//            if (owner.getCurrentGame().getWhitePlayer().getThreatened().contains(target)) {
+//                return false;
+//            }
+//        }
+
         if ((abs(x - this.getPosX()) > 1) || (abs(y - this.getPosY()) > 1)) {
             return false;
         } else if (x == this.getPosX() && y == this.getPosY()) {

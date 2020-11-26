@@ -5,12 +5,12 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 // User is a class representing a player at a chess board, with information about what pieces they own and which
 // enemy pieces they have captured, as well as what their name is. Can return any of this information and display it
-// to console. !!!NOTE ANY CONSOLE INTERACTION NEEDS TO BE IN THE UI CLASS SO GET THOSE OUT OF HERE, TO FIX THIS JUST
-// MAKE THE VOID RETURNS INSTEAD RETURN A STRING AND THEN HAVE THAT STRING PRINTED IN UI PART OF PROJECT!!!
+// to console.
 public class User implements Writable {
     private final String name;
     private ChessGame currentGame;
@@ -18,6 +18,7 @@ public class User implements Writable {
     private ArrayList<ChessPiece> captured;
     //If boolean is true this owner is playing with the white pieces, if false they play with black pieces
     private boolean playingWhite;
+    private boolean isInCheck;
 
     private ArrayList<String> threatened;
     private ArrayList<String> possibleMoves;
@@ -44,6 +45,30 @@ public class User implements Writable {
         threatened = new ArrayList<String>();
         possibleMoves = new ArrayList<String>();
     }
+
+//    //EFFECTS: returns all of the squares that this player threatens
+//    public HashSet<String> generateThreats() {
+//        HashSet<String> threats = new HashSet<String>();
+//
+//        for (ChessPiece p: owned) {
+//            threats.addAll(p.generateThreats(getCurrentGame().getActive()));
+//        }
+//
+//        return threats;
+//    }
+//
+//    //REQUIRES: this player has a king
+//    //EFFECTS: returns the position of the king of this player
+//    public String getKingPosition() {
+//        Translator t = new Translator();
+//        for (ChessPiece p: owned) {
+//            if (p.symbol().toLowerCase().equals("k")) {
+//                return t.translateToChessCoord(p.getPosX(), p.getPosY());
+//            }
+//        }
+//        //if no king found
+//        return null;
+//    }
 
     //taken and adjusted from JsonSerializationDemo
     //EFFECTS: returns this player as a JSON object
@@ -144,5 +169,13 @@ public class User implements Writable {
 
     public void setCurrentGame(ChessGame currentGame) {
         this.currentGame = currentGame;
+    }
+
+    public boolean isInCheck() {
+        return isInCheck;
+    }
+
+    public void setInCheck(boolean inCheck) {
+        isInCheck = inCheck;
     }
 }
