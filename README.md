@@ -1,4 +1,4 @@
-# JCChess : Created by John Carpenter for CPSC 210 Course at UBC
+# Chess Software : Created by John Carpenter for CPSC 210 Course at UBC
 
 ## Design Goals
 
